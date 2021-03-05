@@ -15,7 +15,7 @@ CREATE SEQUENCE public.seg_usuario_id_seg_usuario_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.seg_usuario_id_seg_usuario_seq OWNER TO appinf2;
+ALTER SEQUENCE public.seg_usuario_id_seg_usuario_seq OWNER TO mipymes;
 -- ddl-end --
 
 -- object: public.seg_usuario | type: TABLE --
@@ -32,7 +32,7 @@ CREATE TABLE public.seg_usuario(
 
 );
 -- ddl-end --
-ALTER TABLE public.seg_usuario OWNER TO appinf2;
+ALTER TABLE public.seg_usuario OWNER TO mipymes;
 -- ddl-end --
 
 -- object: public.seg_modulo_id_seg_modulo_seq | type: SEQUENCE --
@@ -46,7 +46,7 @@ CREATE SEQUENCE public.seg_modulo_id_seg_modulo_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.seg_modulo_id_seg_modulo_seq OWNER TO appinf2;
+ALTER SEQUENCE public.seg_modulo_id_seg_modulo_seq OWNER TO mipymes;
 -- ddl-end --
 
 -- object: public.seg_modulo | type: TABLE --
@@ -59,7 +59,7 @@ CREATE TABLE public.seg_modulo(
 
 );
 -- ddl-end --
-ALTER TABLE public.seg_modulo OWNER TO appinf2;
+ALTER TABLE public.seg_modulo OWNER TO mipymes;
 -- ddl-end --
 
 -- object: public.seg_asignacion_id_seg_asignacion_seq | type: SEQUENCE --
@@ -73,7 +73,7 @@ CREATE SEQUENCE public.seg_asignacion_id_seg_asignacion_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.seg_asignacion_id_seg_asignacion_seq OWNER TO appinf2;
+ALTER SEQUENCE public.seg_asignacion_id_seg_asignacion_seq OWNER TO mipymes;
 -- ddl-end --
 
 -- object: public.seg_asignacion | type: TABLE --
@@ -86,7 +86,7 @@ CREATE TABLE public.seg_asignacion(
 
 );
 -- ddl-end --
-ALTER TABLE public.seg_asignacion OWNER TO appinf2;
+ALTER TABLE public.seg_asignacion OWNER TO mipymes;
 -- ddl-end --
 
 -- object: public.aud_bitacora_id_aud_bitacora_seq | type: SEQUENCE --
@@ -100,7 +100,7 @@ CREATE SEQUENCE public.aud_bitacora_id_aud_bitacora_seq
 	NO CYCLE
 	OWNED BY NONE;
 -- ddl-end --
-ALTER SEQUENCE public.aud_bitacora_id_aud_bitacora_seq OWNER TO appinf2;
+ALTER SEQUENCE public.aud_bitacora_id_aud_bitacora_seq OWNER TO mipymes;
 -- ddl-end --
 
 -- object: public.aud_bitacora | type: TABLE --
@@ -117,7 +117,7 @@ CREATE TABLE public.aud_bitacora(
 
 );
 -- ddl-end --
-ALTER TABLE public.aud_bitacora OWNER TO appinf2;
+ALTER TABLE public.aud_bitacora OWNER TO mipymes;
 -- ddl-end --
 
 -- object: public.thm_cargo | type: TABLE --
@@ -130,7 +130,7 @@ CREATE TABLE public.thm_cargo(
 
 );
 -- ddl-end --
-ALTER TABLE public.thm_cargo OWNER TO appinf2;
+ALTER TABLE public.thm_cargo OWNER TO mipymes;
 -- ddl-end --
 
 -- object: public.thm_empleado | type: TABLE --
@@ -147,7 +147,7 @@ CREATE TABLE public.thm_empleado(
 
 );
 -- ddl-end --
-ALTER TABLE public.thm_empleado OWNER TO appinf2;
+ALTER TABLE public.thm_empleado OWNER TO mipymes;
 -- ddl-end --
 
 -- object: public.thm_rol_cabecera | type: TABLE --
@@ -165,7 +165,7 @@ CREATE TABLE public.thm_rol_cabecera(
 	total numeric(7,2) NOT NULL
 );
 -- ddl-end --
-ALTER TABLE public.thm_rol_cabecera OWNER TO appinf2;
+ALTER TABLE public.thm_rol_cabecera OWNER TO mipymes;
 -- ddl-end --
 
 -- object: public.thm_rol_detalle | type: TABLE --
@@ -179,7 +179,7 @@ CREATE TABLE public.thm_rol_detalle(
 	orden smallint NOT NULL
 );
 -- ddl-end --
-ALTER TABLE public.thm_rol_detalle OWNER TO appinf2;
+ALTER TABLE public.thm_rol_detalle OWNER TO mipymes;
 -- ddl-end --
 
 -- object: seg_modulo_seg_asignacion_fk | type: CONSTRAINT --
