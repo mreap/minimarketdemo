@@ -15,6 +15,7 @@ import minimarketdemo.model.core.entities.ThmRolCabecera;
 import minimarketdemo.model.core.entities.ThmRolDetalle;
 import minimarketdemo.model.core.managers.ManagerDAO;
 import minimarketdemo.model.seguridades.managers.ManagerSeguridades;
+import minimarketdemo.model.thumano.dtos.DTOThmCargo;
 
 /**
  * Session Bean implementation class ManagerTHumano
@@ -61,6 +62,16 @@ public class ManagerTHumano {
     
     public List<ThmCargo> findAllThmCargo(){
     	return mDAO.findAll(ThmCargo.class, "nombreCargo");
+    }
+    
+    public List<DTOThmCargo> findAllDTOThmCargo(){
+    	List<DTOThmCargo> listaDTO=new ArrayList<DTOThmCargo>();
+    	for(ThmCargo cargo:findAllThmCargo()) {
+    		DTOThmCargo nuevoDTO=new DTOThmCargo(cargo.getIdThmCargo(), cargo.getNombreCargo(), 
+    				cargo.getRemuneracionMensual().doubleValue());
+    		listaDTO.add(nuevoDTO);
+    	}
+    	return listaDTO;
     }
     
     //ROL DE PAGOS:

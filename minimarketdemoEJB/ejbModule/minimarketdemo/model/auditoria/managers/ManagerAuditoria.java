@@ -62,5 +62,9 @@ public class ManagerAuditoria {
     	return q.getResultList();
     	
     }
+    
+    public void eliminarBitacora() {
+    	System.out.println("La bitacora se ha eliminado.");
+    }
 
 }
