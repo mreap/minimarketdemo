@@ -74,6 +74,13 @@ public class ManagerTHumano {
     	return listaDTO;
     }
     
+    public void insertarCargo() throws Exception {
+    	ThmCargo cargo=new ThmCargo();
+    	cargo.setNombreCargo("Nuevo cargo");
+    	cargo.setRemuneracionMensual(new BigDecimal(1300));
+    	mDAO.insertar(cargo);
+    }
+    
     //ROL DE PAGOS:
     
     public List<ThmRolCabecera> findAllThmRolCabecera(){
