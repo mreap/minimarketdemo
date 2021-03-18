@@ -12,6 +12,7 @@ import javax.persistence.Query;
 
 import minimarketdemo.model.core.entities.AudBitacora;
 import minimarketdemo.model.core.managers.ManagerDAO;
+import minimarketdemo.model.seguridades.dtos.LoginDTO;
 
 /**
  * Session Bean implementation class ManagerAuditoria
@@ -42,6 +43,32 @@ public class ManagerAuditoria {
     	Timestamp tiempo=new Timestamp(System.currentTimeMillis());
     	pista.setFechaEvento(tiempo);
     	pista.setIdUsuario("anonimo");
+    	pista.setNombreClase(clase.getSimpleName());
+    	pista.setNombreMetodo(nombreMetodo);
+    	try {
+			mDAO.insertar(pista);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
+    /**
+     * Metodo registro de pistas de auditoria.
+     * @param clase Informacion de la clase que se esta depurando.
+     * @param nombreMetodo Metodo que genera el mensaje para depuracion.
+     * @param mensaje El mensaje a desplegar.
+     */
+    public void mostrarLog(final LoginDTO loginDTO,Class clase,String nombreMetodo,String mensaje) {
+    	SimpleDateFormat format=new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    	System.out.println(format.format(new Date())+" ["+
+				loginDTO.getIdSegUsuario()+"@"+
+				loginDTO.getDireccionIP()+":"+clase.getSimpleName()+"/"+nombreMetodo+"]: "+mensaje);
+    	AudBitacora pista=new AudBitacora();
+    	pista.setDescripcionEvento(mensaje);
+    	pista.setDireccionIp(loginDTO.getDireccionIP());
+    	Timestamp tiempo=new Timestamp(System.currentTimeMillis());
+    	pista.setFechaEvento(tiempo);
+    	pista.setIdUsuario(""+loginDTO.getIdSegUsuario());
     	pista.setNombreClase(clase.getSimpleName());
     	pista.setNombreMetodo(nombreMetodo);
     	try {
