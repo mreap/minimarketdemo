@@ -13,6 +13,7 @@ import minimarketdemo.model.core.entities.ThmCargo;
 import minimarketdemo.model.core.entities.ThmEmpleado;
 import minimarketdemo.model.core.entities.ThmRolCabecera;
 import minimarketdemo.model.core.entities.ThmRolDetalle;
+import minimarketdemo.model.core.entities.VwThmConsultaRol;
 import minimarketdemo.model.core.managers.ManagerDAO;
 import minimarketdemo.model.seguridades.managers.ManagerSeguridades;
 import minimarketdemo.model.thumano.dtos.DTOThmCargo;
@@ -178,6 +179,11 @@ public class ManagerTHumano {
 		cab.setTotal(new BigDecimal(total));
 		
 		cab.setThmRolDetalles(detalles);
+		
+    }
+    
+    public List<VwThmConsultaRol> findVwThmConsultaRol(){
+    	return mDAO.findAll(VwThmConsultaRol.class);
     }
     
 

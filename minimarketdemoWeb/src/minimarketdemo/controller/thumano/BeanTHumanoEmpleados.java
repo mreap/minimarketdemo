@@ -12,6 +12,7 @@ import minimarketdemo.controller.JSFUtil;
 import minimarketdemo.model.core.entities.SegUsuario;
 import minimarketdemo.model.core.entities.ThmCargo;
 import minimarketdemo.model.core.entities.ThmEmpleado;
+import minimarketdemo.model.core.entities.VwThmConsultaRol;
 import minimarketdemo.model.seguridades.managers.ManagerSeguridades;
 import minimarketdemo.model.thumano.managers.ManagerTHumano;
 
@@ -28,6 +29,7 @@ public class BeanTHumanoEmpleados implements Serializable {
 	private ThmEmpleado nuevoEmpleado;
 	private int idSegUsuario;
 	private int idThmCargo;
+	private List<VwThmConsultaRol> listaConsulta;
 	
 	@PostConstruct
 	public void inicializar() {
@@ -43,6 +45,11 @@ public class BeanTHumanoEmpleados implements Serializable {
 		listaCargos=mTHumano.findAllThmCargo();
 		listaEmpleados=mTHumano.findAllThmEmpleado();
 		return "empleados?faces-redirect=true";
+	}
+	
+	public String actionCargarMenuConsulta() {
+		listaConsulta=mTHumano.findVwThmConsultaRol();
+		return "consulta?faces-redirect=true";
 	}
 	
 	public void actionListenerInsertarEmpleado() {
@@ -102,6 +109,14 @@ public class BeanTHumanoEmpleados implements Serializable {
 
 	public void setIdThmCargo(int idThmCargo) {
 		this.idThmCargo = idThmCargo;
+	}
+
+	public List<VwThmConsultaRol> getListaConsulta() {
+		return listaConsulta;
+	}
+
+	public void setListaConsulta(List<VwThmConsultaRol> listaConsulta) {
+		this.listaConsulta = listaConsulta;
 	}
 
 }

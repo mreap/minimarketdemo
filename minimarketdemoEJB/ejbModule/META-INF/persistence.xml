@@ -10,5 +10,6 @@
 		<class>minimarketdemo.model.core.entities.ThmEmpleado</class>
 		<class>minimarketdemo.model.core.entities.ThmRolCabecera</class>
 		<class>minimarketdemo.model.core.entities.ThmRolDetalle</class>
+		<class>minimarketdemo.model.core.entities.VwThmConsultaRol</class>
 	</persistence-unit>
 </persistence>
