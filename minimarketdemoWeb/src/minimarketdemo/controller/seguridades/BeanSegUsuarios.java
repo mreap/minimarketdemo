@@ -15,6 +15,8 @@ import minimarketdemo.model.seguridades.managers.ManagerSeguridades;
 @Named
 @SessionScoped
 public class BeanSegUsuarios implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@EJB
 	private ManagerSeguridades managerSeguridades;
 	

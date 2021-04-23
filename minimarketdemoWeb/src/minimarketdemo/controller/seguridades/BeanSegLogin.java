@@ -19,6 +19,7 @@ import minimarketdemo.model.seguridades.managers.ManagerSeguridades;
 @Named
 @SessionScoped
 public class BeanSegLogin implements Serializable {
+	private static final long serialVersionUID = 1L;
 	private int idSegUsuario;
 	private String clave;
 	private LoginDTO loginDTO;

@@ -20,6 +20,7 @@ import minimarketdemo.model.core.utils.ModelUtil;
 @Named
 @SessionScoped
 public class BeanAudBitacora implements Serializable {
+	private static final long serialVersionUID = 1L;
 	@EJB
 	private ManagerAuditoria managerAuditoria;
 	private List<AudBitacora> listaBitacora;

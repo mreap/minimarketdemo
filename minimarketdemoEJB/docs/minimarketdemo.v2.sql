@@ -224,4 +224,8 @@ REFERENCES public.thm_rol_cabecera (id_thm_rol_cabecera) MATCH FULL
 ON DELETE NO ACTION ON UPDATE NO ACTION;
 -- ddl-end --
 
-
+create view vw_thm_consulta_rol as
+select trc.id_thm_rol_cabecera, trc.periodo_rol, trc.id_thm_empleado, trc.total, te.horas_extra, su.apellidos
+from thm_rol_cabecera trc, thm_empleado te,seg_usuario su
+where trc.id_thm_empleado=te.id_thm_empleado
+and te.id_seg_usuario=su.id_seg_usuario;

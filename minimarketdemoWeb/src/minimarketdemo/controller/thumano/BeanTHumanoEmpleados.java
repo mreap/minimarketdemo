@@ -19,6 +19,7 @@ import minimarketdemo.model.thumano.managers.ManagerTHumano;
 @Named
 @SessionScoped
 public class BeanTHumanoEmpleados implements Serializable {
+	private static final long serialVersionUID = 1L;
 	@EJB
 	private ManagerTHumano mTHumano;
 	@EJB
