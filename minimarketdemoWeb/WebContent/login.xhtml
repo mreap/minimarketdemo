@@ -10,9 +10,9 @@
 </h:head>
 <body>
 	<div align="center">
-	<p:messages>
-		<p:autoUpdate />
-	</p:messages>
+		<p:messages>
+			<p:autoUpdate />
+		</p:messages>
 		<h:form>
 			<p:panel>
 				<p:panelGrid columns="2">
@@ -31,10 +31,20 @@
 					<h:outputText value="Inicializar datos" />
 					<p:commandButton value="Inicializar"
 						actionListener="#{beanSegLogin.actionListenerInicialiarDemo()}"
-						icon="pi pi-close"></p:commandButton>
+						icon="pi pi-cog">
+						<p:confirm type="popup" header="Confirmation"
+							message="Desea inicializar datos?"
+							icon="pi pi-exclamation-triangle" />
+					</p:commandButton>
 				</p:panelGrid>
 			</p:panel>
 		</h:form>
 	</div>
+	<p:confirmPopup global="true">
+		<p:commandButton value="No" type="button"
+			styleClass="ui-confirm-popup-no ui-button-flat" />
+		<p:commandButton value="Sí" type="button"
+			styleClass="ui-confirm-popup-yes" />
+	</p:confirmPopup>
 </body>
 </html>
