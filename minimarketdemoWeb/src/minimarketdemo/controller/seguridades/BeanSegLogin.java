@@ -110,7 +110,8 @@ public class BeanSegLogin implements Serializable {
 	
 	public void actionListenerInicialiarDemo() {
 		try {
-			mSeguridades.inicializarDemo();
+			String mensaje=mSeguridades.inicializarDemo();
+			JSFUtil.crearMensajeINFO(mensaje);
 		} catch (Exception e) {
 			JSFUtil.crearMensajeERROR(e.getMessage());
 			e.printStackTrace();

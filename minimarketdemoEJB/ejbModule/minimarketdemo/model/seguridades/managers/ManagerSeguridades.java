@@ -39,11 +39,10 @@ public class ManagerSeguridades {
     /**
      * Funcion de inicializacion de datos de usuarios.
      */
-    public void inicializarDemo() throws Exception {
+    public String inicializarDemo() throws Exception {
     	mAuditoria.mostrarLog(getClass(), "inicializarDemo", "Inicializacion de bdd demo.");
-    	List<SegUsuario> listaUsuarios=mDAO.findAll(SegUsuario.class);
     	int idSegUsuarioAdmin=0;
-    	
+    	String mensaje="";//mensaje que se enviara al metodo que invoca a esta funcion.
     	//buscar el usuario admin (id igual a 1)
     	SegUsuario admin=(SegUsuario) mDAO.findById(SegUsuario.class, 1);
     	if(admin==null) {
@@ -57,38 +56,58 @@ public class ManagerSeguridades {
 			admin.setCodigo("admin");
 			mDAO.insertar(admin);
 			idSegUsuarioAdmin=admin.getIdSegUsuario();
-			mAuditoria.mostrarLog(getClass(), "inicializarDemo", "Usuario administrador creado (id : "+idSegUsuarioAdmin);
+			
+			mAuditoria.mostrarLog(getClass(), "inicializarDemo", "Usuario administrador creado (id : "+idSegUsuarioAdmin+")");
     	}else {
-    		mAuditoria.mostrarLog(getClass(), "inicializarDemo", "Usuario administrador ya existe (id : "+idSegUsuarioAdmin);
+    		idSegUsuarioAdmin=admin.getIdSegUsuario();
+    		mAuditoria.mostrarLog(getClass(), "inicializarDemo", "Usuario administrador ya existe (id : "+idSegUsuarioAdmin+")");
     	}
+    	mensaje="Id del usuario admin: "+idSegUsuarioAdmin;
     	
-    	//verificar si ya existen modulos y fueron asignados:
+    	//verificar si ya existen los modulos iniciales:
     	int idSegModuloSeguridades=0;
     	int idSegModuloAuditoria=0;
-    	SegModulo modulo=(SegModulo) mDAO.findWhere(SegModulo.class, "o.rutaAcceso='seguridades/menu'", null).get(0);
-    	if(modulo==null) {
-			//inicializacion de modulos:
-			modulo=new SegModulo();
+    	List<SegModulo> modulos=mDAO.findAll(SegModulo.class);
+    	for(SegModulo m:modulos) {
+    		if(m.getRutaAcceso().equals("seguridades/menu"))
+    			idSegModuloSeguridades=m.getIdSegModulo();
+    		if(m.getRutaAcceso().equals("auditoria/menu"))
+    			idSegModuloAuditoria=m.getIdSegModulo();
+    	}
+    	
+    	if(idSegModuloSeguridades==0) {
+			//inicializacion de modulo:
+			SegModulo modulo=new SegModulo();
 			modulo.setNombreModulo("Seguridades");
 			modulo.setRutaAcceso("seguridades/menu");
 			mDAO.insertar(modulo);
 			idSegModuloSeguridades=modulo.getIdSegModulo();
 			mAuditoria.mostrarLog(getClass(), "inicializarDemo", "Creado módulo de seguridades (id : "+idSegModuloSeguridades+")");
-			//asignacion de accesos:
-			asignarModulo(idSegUsuarioAdmin, idSegModuloSeguridades);
     	}
-    	modulo=(SegModulo) mDAO.findWhere(SegModulo.class, "o.rutaAcceso='auditoria/menu'", null).get(0);
-    	if(modulo==null) {
-			modulo=new SegModulo();
+    	//asignacion de accesos:
+    	try {
+			asignarModulo(idSegUsuarioAdmin, idSegModuloSeguridades);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+    	
+    	if(idSegModuloAuditoria==0) {
+			SegModulo modulo=new SegModulo();
 			modulo.setNombreModulo("Auditoría");
 			modulo.setRutaAcceso("auditoria/menu");
 			mDAO.insertar(modulo);
 			idSegModuloAuditoria=modulo.getIdSegModulo();
 			mAuditoria.mostrarLog(getClass(), "inicializarDemo", "Creado módulo de auditoría (id : "+idSegModuloAuditoria+")");
-			//asignacion de accesos:
-			asignarModulo(idSegUsuarioAdmin, idSegModuloAuditoria);
     	}
+    	//asignacion de accesos:
+    	try {
+			asignarModulo(idSegUsuarioAdmin, idSegModuloAuditoria);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+    	
 		mAuditoria.mostrarLog(getClass(), "inicializarDemo", "Inicializacion de bdd demo terminada.");
+		return mensaje+" Inicialización de bdd demo terminada.";
     }
     
     /**
@@ -222,17 +241,25 @@ public class ManagerSeguridades {
      * @param idSegModulo El codigo del modulo que se va a asignar.
      * @throws Exception
      */
-    public void asignarModulo(int idSegUsuario,int idSegModulo) throws Exception{
+    @SuppressWarnings("unchecked")
+	public void asignarModulo(int idSegUsuario,int idSegModulo) throws Exception{
     	//Buscar los objetos primarios:
     	SegUsuario usuario=(SegUsuario)mDAO.findById(SegUsuario.class, idSegUsuario);
     	SegModulo modulo=(SegModulo)mDAO.findById(SegModulo.class, idSegModulo);
-    	//crear la relacion:
-    	SegAsignacion asignacion=new SegAsignacion();
-    	asignacion.setSegModulo(modulo);
-    	asignacion.setSegUsuario(usuario);
-    	//guardar la asignacion:
-    	mDAO.insertar(asignacion);
-    	mAuditoria.mostrarLog(getClass(), "asignarModulo", "Modulo "+idSegModulo+" asigando a usuario "+idSegUsuario);
+    	//verificar si ya existe:
+    	String consulta="o.segModulo.idSegModulo="+idSegModulo+" and o.segUsuario.idSegUsuario="+idSegUsuario;
+    	List<SegAsignacion> asignaciones=mDAO.findWhere(SegAsignacion.class, consulta, null);
+    	if(asignaciones==null || asignaciones.size()==0) {
+	    	//crear la relacion:
+	    	SegAsignacion asignacion=new SegAsignacion();
+	    	asignacion.setSegModulo(modulo);
+	    	asignacion.setSegUsuario(usuario);
+	    	//guardar la asignacion:
+	    	mDAO.insertar(asignacion);
+	    	mAuditoria.mostrarLog(getClass(), "asignarModulo", "Modulo "+idSegModulo+" asignado a usuario "+idSegUsuario);
+    	}else {
+    		throw new Exception("Ya existe la asignación de usuario/módulo ("+idSegUsuario+"/"+idSegModulo+")");
+    	}
     }
     
     public void eliminarAsignacion(int idSegAsignacion) throws Exception {
