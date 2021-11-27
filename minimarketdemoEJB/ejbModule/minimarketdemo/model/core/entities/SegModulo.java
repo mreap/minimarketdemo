@@ -26,9 +26,9 @@ public class SegModulo implements Serializable {
 	@Column(name="ruta_acceso", nullable=false, length=100)
 	private String rutaAcceso;
 
-	//bi-directional many-to-one association to SegAsignacion
+	//bi-directional many-to-one association to SegPerfil
 	@OneToMany(mappedBy="segModulo")
-	private List<SegAsignacion> segAsignacions;
+	private List<SegPerfil> segPerfils;
 
 	public SegModulo() {
 	}
@@ -57,26 +57,26 @@ public class SegModulo implements Serializable {
 		this.rutaAcceso = rutaAcceso;
 	}
 
-	public List<SegAsignacion> getSegAsignacions() {
-		return this.segAsignacions;
+	public List<SegPerfil> getSegPerfils() {
+		return this.segPerfils;
 	}
 
-	public void setSegAsignacions(List<SegAsignacion> segAsignacions) {
-		this.segAsignacions = segAsignacions;
+	public void setSegPerfils(List<SegPerfil> segPerfils) {
+		this.segPerfils = segPerfils;
 	}
 
-	public SegAsignacion addSegAsignacion(SegAsignacion segAsignacion) {
-		getSegAsignacions().add(segAsignacion);
-		segAsignacion.setSegModulo(this);
+	public SegPerfil addSegPerfil(SegPerfil segPerfil) {
+		getSegPerfils().add(segPerfil);
+		segPerfil.setSegModulo(this);
 
-		return segAsignacion;
+		return segPerfil;
 	}
 
-	public SegAsignacion removeSegAsignacion(SegAsignacion segAsignacion) {
-		getSegAsignacions().remove(segAsignacion);
-		segAsignacion.setSegModulo(null);
+	public SegPerfil removeSegPerfil(SegPerfil segPerfil) {
+		getSegPerfils().remove(segPerfil);
+		segPerfil.setSegModulo(null);
 
-		return segAsignacion;
+		return segPerfil;
 	}
 
 }

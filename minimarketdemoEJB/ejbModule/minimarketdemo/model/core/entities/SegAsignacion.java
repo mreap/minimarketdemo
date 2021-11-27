@@ -19,10 +19,10 @@ public class SegAsignacion implements Serializable {
 	@Column(name="id_seg_asignacion", unique=true, nullable=false)
 	private Integer idSegAsignacion;
 
-	//bi-directional many-to-one association to SegModulo
+	//bi-directional many-to-one association to SegPerfil
 	@ManyToOne
-	@JoinColumn(name="id_seg_modulo", nullable=false)
-	private SegModulo segModulo;
+	@JoinColumn(name="id_seg_perfil", nullable=false)
+	private SegPerfil segPerfil;
 
 	//bi-directional many-to-one association to SegUsuario
 	@ManyToOne
@@ -40,12 +40,12 @@ public class SegAsignacion implements Serializable {
 		this.idSegAsignacion = idSegAsignacion;
 	}
 
-	public SegModulo getSegModulo() {
-		return this.segModulo;
+	public SegPerfil getSegPerfil() {
+		return this.segPerfil;
 	}
 
-	public void setSegModulo(SegModulo segModulo) {
-		this.segModulo = segModulo;
+	public void setSegPerfil(SegPerfil segPerfil) {
+		this.segPerfil = segPerfil;
 	}
 
 	public SegUsuario getSegUsuario() {
