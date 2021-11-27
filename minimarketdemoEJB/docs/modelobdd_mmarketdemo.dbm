@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+CAUTION: Do not modify this file unless you know what you are doing.
+         Unexpected results may occur if the code is changed deliberately.
+-->
+<dbmodel pgmodeler-ver="0.9.1" last-position="0,0" last-zoom="0.75"
+	 default-owner="postgres">
+<database name="mipymes" encoding="UTF8" lc-collate="es_EC.UTF-8" lc-ctype="es_EC.UTF-8" is-template="false" allow-conns="true">
+	<tablespace name="pg_default"/>
+</database>
+
+<schema name="public" rect-visible="true" fill-color="#e1e1e1" sql-disabled="true">
+</schema>
+
+<sequence name="seg_usuario_id_seg_usuario_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+</sequence>
+
+<table name="seg_usuario">
+	<schema name="public"/>
+	<position x="480" y="80"/>
+	<column name="id_seg_usuario" not-null="true" sequence="public.seg_usuario_id_seg_usuario_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="codigo" not-null="true">
+		<type name="character varying" length="10"/>
+	</column>
+	<column name="apellidos" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="nombres" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="correo" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="clave" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="activo" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<constraint name="seg_usuario_pk" type="pk-constr" table="public.seg_usuario">
+		<columns names="id_seg_usuario" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="seg_modulo_id_seg_modulo_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+</sequence>
+
+<table name="seg_modulo">
+	<schema name="public"/>
+	<position x="1560" y="400"/>
+	<column name="id_seg_modulo" not-null="true" sequence="public.seg_modulo_id_seg_modulo_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="nombre_modulo" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="ruta_acceso" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<constraint name="seg_modulo_pk" type="pk-constr" table="public.seg_modulo">
+		<columns names="id_seg_modulo" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="uk_modulo_ruta" type="uq-constr" table="public.seg_modulo">
+		<columns names="ruta_acceso" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="seg_asignacion_id_seg_asignacion_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+</sequence>
+
+<table name="seg_asignacion">
+	<schema name="public"/>
+	<position x="1000" y="60"/>
+	<column name="id_seg_asignacion" not-null="true" sequence="public.seg_asignacion_id_seg_asignacion_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="id_seg_usuario" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="id_seg_perfil" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="seg_asignacion_pk" type="pk-constr" table="public.seg_asignacion">
+		<columns names="id_seg_asignacion" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="uk_asignacion" type="uq-constr" table="public.seg_asignacion">
+		<columns names="id_seg_usuario,id_seg_perfil" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="aud_bitacora_id_aud_bitacora_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+</sequence>
+
+<table name="aud_bitacora">
+	<schema name="public"/>
+	<position x="80" y="80"/>
+	<column name="id_aud_bitacora" not-null="true" sequence="public.aud_bitacora_id_aud_bitacora_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="fecha_evento" not-null="true">
+		<type name="timestamp" length="0"/>
+	</column>
+	<column name="nombre_clase" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="nombre_metodo" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="descripcion_evento" not-null="true">
+		<type name="character varying" length="300"/>
+	</column>
+	<column name="id_usuario" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="direccion_ip" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<constraint name="aud_bitacora_pk" type="pk-constr" table="public.aud_bitacora">
+		<columns names="id_aud_bitacora" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="thm_cargo_id_thm_cargo_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+</sequence>
+
+<table name="thm_cargo">
+	<schema name="public"/>
+	<position x="640" y="760"/>
+	<column name="id_thm_cargo" not-null="true" sequence="public.thm_cargo_id_thm_cargo_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="nombre_cargo" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="remuneracion_mensual" not-null="true">
+		<type name="numeric" length="7" precision="2"/>
+	</column>
+	<constraint name="thm_cargo_pk" type="pk-constr" table="public.thm_cargo">
+		<columns names="id_thm_cargo" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="thm_empleado_id_thm_empleado_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+</sequence>
+
+<table name="thm_empleado">
+	<schema name="public"/>
+	<position x="680" y="400"/>
+	<column name="id_thm_empleado" not-null="true" sequence="public.thm_empleado_id_thm_empleado_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="id_thm_cargo" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="id_seg_usuario" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="horas_trabajadas" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="horas_extra" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="cuota_prestamo" not-null="true">
+		<type name="numeric" length="7" precision="2"/>
+	</column>
+	<constraint name="thm_empleado_pk" type="pk-constr" table="public.thm_empleado">
+		<columns names="id_thm_empleado" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="uk_empleado_usuario" type="uq-constr" table="public.thm_empleado">
+		<columns names="id_seg_usuario" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="thm_rol_cabecera_id_thm_rol_cabecera_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+</sequence>
+
+<table name="thm_rol_cabecera">
+	<schema name="public"/>
+	<position x="120" y="400"/>
+	<column name="id_thm_rol_cabecera" not-null="true" sequence="public.thm_rol_cabecera_id_thm_rol_cabecera_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="id_thm_empleado" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="periodo_rol" not-null="true">
+		<type name="character varying" length="6"/>
+	</column>
+	<column name="nombre_cargo" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="horas_trabajadas" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="horas_extras" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="subtotal_ingresos" not-null="true">
+		<type name="numeric" length="7" precision="2"/>
+	</column>
+	<column name="subtotal_ingresos_adicionales" not-null="true">
+		<type name="numeric" length="7" precision="2"/>
+	</column>
+	<column name="subtotal_egresos" not-null="true">
+		<type name="numeric" length="7" precision="2"/>
+	</column>
+	<column name="total" not-null="true">
+		<type name="numeric" length="7" precision="2"/>
+	</column>
+	<constraint name="thm_rol_cabecera_pkey" type="pk-constr" table="public.thm_rol_cabecera">
+		<columns names="id_thm_rol_cabecera" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="thm_rol_detalle_id_thm_rol_detalle_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+</sequence>
+
+<table name="thm_rol_detalle">
+	<schema name="public"/>
+	<position x="140" y="800"/>
+	<column name="id_thm_rol_detalle" not-null="true" sequence="public.thm_rol_detalle_id_thm_rol_detalle_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="id_thm_rol_cabecera" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="tipo_detalle" not-null="true">
+		<type name="character varying" length="2"/>
+	</column>
+	<column name="descripcion" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="valor" not-null="true">
+		<type name="numeric" length="7" precision="2"/>
+	</column>
+	<column name="orden" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<constraint name="thm_rol_detalle_pkey" type="pk-constr" table="public.thm_rol_detalle">
+		<columns names="id_thm_rol_detalle" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<view name="vw_thm_consulta_rol">
+	<schema name="public"/>
+	<position x="140" y="1080"/>
+	<reference>
+		<expression><![CDATA[ SELECT trc.id_thm_rol_cabecera,
+    trc.periodo_rol,
+    trc.id_thm_empleado,
+    trc.total,
+    te.horas_extra,
+    su.apellidos
+   FROM thm_rol_cabecera trc,
+    thm_empleado te,
+    seg_usuario su
+  WHERE ((trc.id_thm_empleado = te.id_thm_empleado) AND (te.id_seg_usuario = su.id_seg_usuario));]]></expression>
+	</reference>
+</view>
+
+<sequence name="pry_proyecto_id_pry_proyecto_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+</sequence>
+
+<table name="pry_proyecto">
+	<schema name="public"/>
+	<position x="1120" y="400"/>
+	<column name="id_pry_proyecto" not-null="true" sequence="public.pry_proyecto_id_pry_proyecto_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="nombre" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="fecha_inicio" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="fecha_fin" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="estado" not-null="true">
+		<type name="character varying" length="1"/>
+	</column>
+	<column name="avance" not-null="true">
+		<type name="smallint" length="5" precision="2"/>
+	</column>
+	<constraint name="pry_proyecto_pkey" type="pk-constr" table="public.pry_proyecto">
+		<columns names="id_pry_proyecto" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<sequence name="pry_tarea_id_pry_tarea_seq"
+	 start="1" increment="1"
+	 min-value="1" max-value="2147483647"
+	 cache="1" cycle="false">
+	<schema name="public"/>
+</sequence>
+
+<table name="pry_tarea">
+	<schema name="public"/>
+	<position x="1140" y="720"/>
+	<column name="id_pry_tarea" not-null="true" sequence="public.pry_tarea_id_pry_tarea_seq">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="nombre" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="fecha_inicio" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="fecha_fin" not-null="true">
+		<type name="date" length="0"/>
+	</column>
+	<column name="avance" not-null="true">
+		<type name="smallint" length="0"/>
+	</column>
+	<column name="id_seg_usuario" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<column name="id_pry_proyecto">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="pry_tarea_pkey" type="pk-constr" table="public.pry_tarea">
+		<columns names="id_pry_tarea" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<table name="seg_perfil">
+	<schema name="public"/>
+	<position x="1520" y="80"/>
+	<column name="id_seg_perfil" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="nombre_perfil" not-null="true">
+		<type name="character varying" length="50"/>
+	</column>
+	<column name="ruta_acceso" not-null="true">
+		<type name="character varying" length="100"/>
+	</column>
+	<column name="id_seg_modulo" not-null="true">
+		<type name="integer" length="0"/>
+	</column>
+	<constraint name="seg_perfil_pk" type="pk-constr" table="public.seg_perfil">
+		<columns names="id_seg_perfil" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<constraint name="seg_perfil_seg_asignacion_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.seg_perfil" table="public.seg_asignacion">
+	<columns names="id_seg_perfil" ref-type="src-columns"/>
+	<columns names="id_seg_perfil" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="seg_usuario_seg_asignacion_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.seg_usuario" table="public.seg_asignacion">
+	<columns names="id_seg_usuario" ref-type="src-columns"/>
+	<columns names="id_seg_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_empleado_cargo" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.thm_cargo" table="public.thm_empleado">
+	<columns names="id_thm_cargo" ref-type="src-columns"/>
+	<columns names="id_thm_cargo" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_empleado_usuario" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.seg_usuario" table="public.thm_empleado">
+	<columns names="id_seg_usuario" ref-type="src-columns"/>
+	<columns names="id_seg_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_cab_empleado" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.thm_empleado" table="public.thm_rol_cabecera">
+	<columns names="id_thm_empleado" ref-type="src-columns"/>
+	<columns names="id_thm_empleado" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_det_cab_rol" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.thm_rol_cabecera" table="public.thm_rol_detalle">
+	<columns names="id_thm_rol_cabecera" ref-type="src-columns"/>
+	<columns names="id_thm_rol_cabecera" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="pry_tarea_id_seg_usuario_fkey" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.seg_usuario" table="public.pry_tarea">
+	<columns names="id_seg_usuario" ref-type="src-columns"/>
+	<columns names="id_seg_usuario" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_tarea_proyecto" type="fk-constr" comparison-type="MATCH SIMPLE"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.pry_proyecto" table="public.pry_tarea">
+	<columns names="id_pry_proyecto" ref-type="src-columns"/>
+	<columns names="id_pry_proyecto" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_perfil_modulo" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.seg_modulo" table="public.seg_perfil">
+	<columns names="id_seg_modulo" ref-type="src-columns"/>
+	<columns names="id_seg_modulo" ref-type="dst-columns"/>
+</constraint>
+
+<relationship name="rel_seg_asignacion_seg_perfil" type="relfk"
+	 src-table="public.seg_asignacion"
+	 dst-table="public.seg_perfil" reference-fk="seg_perfil_seg_asignacion_fk"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_seg_asignacion_seg_usuario" type="relfk"
+	 src-table="public.seg_asignacion"
+	 dst-table="public.seg_usuario" reference-fk="seg_usuario_seg_asignacion_fk"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_thm_empleado_thm_cargo" type="relfk"
+	 src-table="public.thm_empleado"
+	 dst-table="public.thm_cargo" reference-fk="fk_empleado_cargo"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_thm_empleado_seg_usuario" type="relfk"
+	 src-table="public.thm_empleado"
+	 dst-table="public.seg_usuario" reference-fk="fk_empleado_usuario"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_thm_rol_cabecera_thm_empleado" type="relfk"
+	 src-table="public.thm_rol_cabecera"
+	 dst-table="public.thm_empleado" reference-fk="fk_cab_empleado"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_thm_rol_detalle_thm_rol_cabecera" type="relfk"
+	 src-table="public.thm_rol_detalle"
+	 dst-table="public.thm_rol_cabecera" reference-fk="fk_det_cab_rol"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_pry_tarea_seg_usuario" type="relfk"
+	 src-table="public.pry_tarea"
+	 dst-table="public.seg_usuario" reference-fk="pry_tarea_id_seg_usuario_fkey"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_pry_tarea_pry_proyecto" type="relfk"
+	 src-table="public.pry_tarea"
+	 dst-table="public.pry_proyecto" reference-fk="fk_tarea_proyecto"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_seg_perfil_seg_modulo" type="relfk"
+	 src-table="public.seg_perfil"
+	 dst-table="public.seg_modulo" reference-fk="fk_perfil_modulo"
+	 src-required="false" dst-required="false"/>
+
+</dbmodel>
