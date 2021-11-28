@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import minimarketdemo.controller.JSFUtil;
 import minimarketdemo.model.core.entities.SegModulo;
+import minimarketdemo.model.core.entities.SegPerfil;
 import minimarketdemo.model.seguridades.dtos.LoginDTO;
 import minimarketdemo.model.seguridades.managers.ManagerSeguridades;
 
@@ -85,15 +86,15 @@ public class BeanSegLogin implements Serializable {
 		
 		//Extraemos la parte inicial de la ruta a la que se esta accediendo:
 		String rutaUsuario=requestPath.substring(1);
-		rutaUsuario=rutaUsuario.substring(0, rutaUsuario.indexOf("/"));
+		rutaUsuario=rutaUsuario.substring(0, rutaUsuario.lastIndexOf("/"));
 		//validacion de la ruta de acceso:
 		boolean verificado=false;
-		for(SegModulo modulo:loginDTO.getListaModulos()) {
+		for(SegPerfil perfil:loginDTO.getListaPerfiles()) {
 			//extraemos el inicio de la ruta (nombre de la carpeta):
-			String rutaModulo=modulo.getRutaAcceso();
-			rutaModulo=rutaModulo.substring(0,rutaModulo.indexOf("/"));
+			String rutaPerfil=perfil.getRutaAcceso();
+			rutaPerfil=rutaPerfil.substring(0,rutaPerfil.indexOf("/menu"));
 			//verificamos con la ruta a la que se está accediendo:
-			if(rutaUsuario.equals(rutaModulo)){
+			if(rutaUsuario.equals(rutaPerfil)){
 				verificado=true;
 				break;
 			}

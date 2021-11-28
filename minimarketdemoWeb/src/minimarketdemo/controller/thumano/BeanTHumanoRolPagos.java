@@ -36,6 +36,9 @@ public class BeanTHumanoRolPagos implements Serializable {
 		listaPeriodosRol.add("202001");
 		listaPeriodosRol.add("202002");
 		listaPeriodosRol.add("202003");
+		listaPeriodosRol.add("202110");
+		listaPeriodosRol.add("202111");
+		listaPeriodosRol.add("202112");
 	}
 
 	public BeanTHumanoRolPagos() {

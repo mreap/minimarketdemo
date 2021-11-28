@@ -46,14 +46,19 @@
 					<br />
 					<p:dataTable value="#{beanSegAsignaciones.listaModulos}" var="m"
 						rows="5" paginator="true">
-						<p:column headerText="Módulos:">
-							<h:outputText value="#{m.nombreModulo}" />
+						<p:column headerText="Módulos / Perfiles:">
+							<p:dataTable value="#{m.segPerfils}" var="p">
+								<p:column>
+									<h:outputText value="#{m.nombreModulo} / #{p.nombrePerfil}" />
+								</p:column>
+								<p:column width="40px">
+									<p:commandButton icon="pi pi-arrow-right" title="asignar"
+										update="@form"
+										actionListener="#{beanSegAsignaciones.actionListenerAsignarPerfil(p.idSegPerfil)}"></p:commandButton>
+								</p:column>
+							</p:dataTable>
 						</p:column>
-						<p:column width="40px">
-							<p:commandButton icon="pi pi-arrow-right" title="asignar"
-								update="@form"
-								actionListener="#{beanSegAsignaciones.actionListenerAsignarModulo(m.idSegModulo)}"></p:commandButton>
-						</p:column>
+
 					</p:dataTable>
 				</h:panelGroup>
 				<h:panelGroup>
@@ -63,7 +68,7 @@
 							<h:outputText value="Asignaciones" />
 						</f:facet>
 						<p:column>
-							<h:outputText value="#{asig.segModulo.nombreModulo}" />
+							<h:outputText value="#{asig.segPerfil.segModulo.nombreModulo} / #{asig.segPerfil.nombrePerfil}" />
 						</p:column>
 						<p:column width="40px">
 							<p:commandButton icon="pi pi-times-circle" title="eliminar"

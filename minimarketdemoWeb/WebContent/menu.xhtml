@@ -27,16 +27,16 @@
 			<p:panel style="width:50%">
 				<p:staticMessage severity="info" summary="SISTEMA MINIMARKETDEMO"
 					style="width: 100%" />
-				<p:dataView value="#{beanSegLogin.loginDTO.listaModulos}"
-					var="modulo" layout="grid" gridIcon="pi pi-th-large"
-					emptyMessage="No tiene módulos asignados. Consulte al administrador.">
+				<p:dataView value="#{beanSegLogin.loginDTO.listaPerfiles}"
+					var="perfil" layout="grid" gridIcon="pi pi-th-large"
+					emptyMessage="No tiene perfiles asignados. Consulte al administrador.">
 					<p:dataViewGridItem>
 						<p:commandLink
-							action="#{beanSegLogin.actionMenu(modulo.rutaAcceso)}">
+							action="#{beanSegLogin.actionMenu(perfil.rutaAcceso)}">
 							<p:panelGrid columns="1">
-								<h:outputText value="#{modulo.nombreModulo}" />
-								<h:outputText value="#{modulo.rutaAcceso}" />
-								<i class="pi pi-slack" style="font-size: 2rem"></i>
+								<h:outputText value="#{perfil.segModulo.nombreModulo}" />
+								<h:outputText value="#{perfil.nombrePerfil}" />
+								<i class="#{perfil.segModulo.icono}" style="font-size: 2rem"></i>
 							</p:panelGrid>
 						</p:commandLink>
 					</p:dataViewGridItem>

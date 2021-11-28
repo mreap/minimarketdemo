@@ -34,7 +34,7 @@
 		<h:form>
 			<p:dataTable value="#{beanSegUsuarios.listaUsuarios}" var="usuario"
 				paginator="true" rows="5">
-				<p:column headerText="ID">
+				<p:column headerText="ID" style="width:50px">
 					<h:outputText value="#{usuario.idSegUsuario}" />
 				</p:column>
 				<p:column headerText="APELLIDOS" filterBy="#{usuario.apellidos}"
@@ -49,7 +49,7 @@
 					filterMatchMode="contains">
 					<h:outputText value="#{usuario.correo}" />
 				</p:column>
-				<p:column headerText="ACTIVO">
+				<p:column headerText="ACTIVO" style="width:50px">
 					<h:outputText value="#{usuario.activo}" />
 				</p:column>
 				<p:column headerText="OPCIONES">

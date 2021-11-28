@@ -3,16 +3,16 @@ package minimarketdemo.model.seguridades.dtos;
 import java.util.ArrayList;
 import java.util.List;
 
-import minimarketdemo.model.core.entities.SegModulo;
+import minimarketdemo.model.core.entities.SegPerfil;
 
 public class LoginDTO {
 	private int idSegUsuario;
 	private String correo;
 	private String direccionIP;
-	private List<SegModulo> listaModulos;
+	private List<SegPerfil> listaPerfiles;
 	
 	public LoginDTO() {
-		listaModulos=new ArrayList<SegModulo>();
+		listaPerfiles=new ArrayList<SegPerfil>();
 	}
 	public int getIdSegUsuario() {
 		return idSegUsuario;
@@ -26,11 +26,11 @@ public class LoginDTO {
 	public void setCorreo(String correo) {
 		this.correo = correo;
 	}
-	public List<SegModulo> getListaModulos() {
-		return listaModulos;
+	public List<SegPerfil> getListaPerfiles() {
+		return listaPerfiles;
 	}
-	public void setListaModulos(List<SegModulo> listaModulos) {
-		this.listaModulos = listaModulos;
+	public void setListaPerfiles(List<SegPerfil> listaPerfiles) {
+		this.listaPerfiles = listaPerfiles;
 	}
 	public String getDireccionIP() {
 		return direccionIP;

@@ -20,14 +20,14 @@ public class SegModulo implements Serializable {
 	@Column(name="id_seg_modulo", unique=true, nullable=false)
 	private Integer idSegModulo;
 
+	@Column(length=100)
+	private String icono;
+
 	@Column(name="nombre_modulo", nullable=false, length=50)
 	private String nombreModulo;
 
-	@Column(name="ruta_acceso", nullable=false, length=100)
-	private String rutaAcceso;
-
 	//bi-directional many-to-one association to SegPerfil
-	@OneToMany(mappedBy="segModulo")
+	@OneToMany(mappedBy="segModulo",fetch = FetchType.EAGER)
 	private List<SegPerfil> segPerfils;
 
 	public SegModulo() {
@@ -41,20 +41,20 @@ public class SegModulo implements Serializable {
 		this.idSegModulo = idSegModulo;
 	}
 
+	public String getIcono() {
+		return this.icono;
+	}
+
+	public void setIcono(String icono) {
+		this.icono = icono;
+	}
+
 	public String getNombreModulo() {
 		return this.nombreModulo;
 	}
 
 	public void setNombreModulo(String nombreModulo) {
 		this.nombreModulo = nombreModulo;
-	}
-
-	public String getRutaAcceso() {
-		return this.rutaAcceso;
-	}
-
-	public void setRutaAcceso(String rutaAcceso) {
-		this.rutaAcceso = rutaAcceso;
 	}
 
 	public List<SegPerfil> getSegPerfils() {

@@ -43,11 +43,11 @@ public class BeanSegAsignaciones implements Serializable {
 		listaAsignaciones=managerSeguridades.findAsignacionByUsuario(idSegUsuarioSeleccionado);
 	}
 	
-	public void actionListenerAsignarModulo(int idSegModulo) {
+	public void actionListenerAsignarPerfil(int idSegPerfil) {
 		try {
-			managerSeguridades.asignarModulo(idSegUsuarioSeleccionado, idSegModulo);
+			managerSeguridades.asignarPerfil(idSegUsuarioSeleccionado, idSegPerfil);
 			listaAsignaciones=managerSeguridades.findAsignacionByUsuario(idSegUsuarioSeleccionado);
-			JSFUtil.crearMensajeINFO("Módulo asignado.");
+			JSFUtil.crearMensajeINFO("Perfil asignado.");
 		} catch (Exception e) {
 			JSFUtil.crearMensajeERROR(e.getMessage());
 			e.printStackTrace();

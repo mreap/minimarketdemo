@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.1" last-position="0,0" last-zoom="0.75"
+<dbmodel pgmodeler-ver="0.9.1" last-position="75,0" last-zoom="0.95"
 	 default-owner="postgres">
 <database name="mipymes" encoding="UTF8" lc-collate="es_EC.UTF-8" lc-ctype="es_EC.UTF-8" is-template="false" allow-conns="true">
 	<tablespace name="pg_default"/>
@@ -64,14 +64,14 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<column name="nombre_modulo" not-null="true">
 		<type name="character varying" length="50"/>
 	</column>
-	<column name="ruta_acceso" not-null="true">
+	<column name="icono">
 		<type name="character varying" length="100"/>
 	</column>
 	<constraint name="seg_modulo_pk" type="pk-constr" table="public.seg_modulo">
 		<columns names="id_seg_modulo" ref-type="src-columns"/>
 	</constraint>
-	<constraint name="uk_modulo_ruta" type="uq-constr" table="public.seg_modulo">
-		<columns names="ruta_acceso" ref-type="src-columns"/>
+	<constraint name="uk_nombre_modulo" type="uq-constr" table="public.seg_modulo">
+		<columns names="nombre_modulo" ref-type="src-columns"/>
 	</constraint>
 </table>
 

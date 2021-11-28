@@ -18,6 +18,8 @@
 	<h:form>
 		<p:menubar>
 			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+			<p:menuitem value="Galería de íconos" icon="pi pi-external-link"
+				url="https://www.primefaces.org/showcase/icons.xhtml" target="_blank" />
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
 					icon="pi pi-user">
@@ -36,9 +38,8 @@
 					<h:outputText value="Nombre del módulo:" />
 					<p:inputText value="#{beanSegModulos.nuevoModulo.nombreModulo}"
 						required="true" requiredMessage="Ingrese el nombre del módulo." />
-					<h:outputText value="Ruta de acceso:" />
-					<p:inputText value="#{beanSegModulos.nuevoModulo.rutaAcceso}"
-						required="true" requiredMessage="Ingrese la ruta de acceso." />
+					<h:outputText value="Icono:" />
+					<p:inputText value="#{beanSegModulos.nuevoModulo.icono}" />
 					<p:commandButton value="Guardar" icon="pi pi-save"
 						update="@form:,formDatos"
 						actionListener="#{beanSegModulos.actionListenerInsertarModulo()}"></p:commandButton>
@@ -54,8 +55,9 @@
 				<p:column headerText="NOMBRE MÓDULO">
 					<h:outputText value="#{m.nombreModulo}" />
 				</p:column>
-				<p:column headerText="RUTA ACCESO">
-					<h:outputText value="#{m.rutaAcceso}" />
+				<p:column headerText="ICONO">
+					<h:outputText value="#{m.icono}" />
+					<i class="#{m.icono}" style="font-size: 2rem"></i>
 				</p:column>
 				<p:column headerText="OPCIONES">
 					<p:commandButton icon="pi pi-pencil" title="editar"
@@ -67,6 +69,9 @@
 						<p:confirm header="Confirmación"
 							message="Desea borrar este registro?" icon="pi pi-info-circle" />
 					</p:commandButton>
+					<p:commandButton icon="pi pi-search" title="Ver perfiles"
+						value="Ver perfiles"
+						action="#{beanSegModulos.actionCargarPerfiles(m)}" />
 				</p:column>
 			</p:dataTable>
 		</h:form>
@@ -77,9 +82,8 @@
 				<h:outputText value="Nombre del módulo:" />
 				<p:inputText value="#{beanSegModulos.edicionModulo.nombreModulo}"
 					required="true" requiredMessage="Ingrese el nombre del módulo." />
-				<h:outputText value="Ruta de acceso:" />
-				<p:inputText value="#{beanSegModulos.edicionModulo.rutaAcceso}"
-					required="true" requiredMessage="Ingrese la ruta de acceso." />
+				<h:outputText value="Icono:" />
+				<p:inputText value="#{beanSegModulos.edicionModulo.icono}" />
 				<p:commandButton value="Guardar" icon="pi pi-save"
 					update="@form,:formDatos"
 					actionListener="#{beanSegModulos.actionListenerGuardarEdicionModulo()}"></p:commandButton>

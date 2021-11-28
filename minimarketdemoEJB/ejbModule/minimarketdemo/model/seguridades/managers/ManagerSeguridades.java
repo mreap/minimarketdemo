@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import minimarketdemo.model.auditoria.managers.ManagerAuditoria;
 import minimarketdemo.model.core.entities.SegAsignacion;
 import minimarketdemo.model.core.entities.SegModulo;
+import minimarketdemo.model.core.entities.SegPerfil;
 import minimarketdemo.model.core.entities.SegUsuario;
 import minimarketdemo.model.core.managers.ManagerDAO;
 import minimarketdemo.model.core.utils.ModelUtil;
@@ -67,11 +68,13 @@ public class ManagerSeguridades {
     	//verificar si ya existen los modulos iniciales:
     	int idSegModuloSeguridades=0;
     	int idSegModuloAuditoria=0;
+    	int idSegPerfilAuditor=0;
+    	int idSegPerfilSegAdministrador=0;
     	List<SegModulo> modulos=mDAO.findAll(SegModulo.class);
     	for(SegModulo m:modulos) {
-    		if(m.getRutaAcceso().equals("seguridades/menu"))
+    		if(m.getNombreModulo().equals("Seguridades"))
     			idSegModuloSeguridades=m.getIdSegModulo();
-    		if(m.getRutaAcceso().equals("auditoria/menu"))
+    		if(m.getNombreModulo().equals("Auditoría"))
     			idSegModuloAuditoria=m.getIdSegModulo();
     	}
     	
@@ -79,14 +82,28 @@ public class ManagerSeguridades {
 			//inicializacion de modulo:
 			SegModulo modulo=new SegModulo();
 			modulo.setNombreModulo("Seguridades");
-			modulo.setRutaAcceso("seguridades/menu");
+			modulo.setIcono("pi pi-lock");
 			mDAO.insertar(modulo);
 			idSegModuloSeguridades=modulo.getIdSegModulo();
 			mAuditoria.mostrarLog(getClass(), "inicializarDemo", "Creado módulo de seguridades (id : "+idSegModuloSeguridades+")");
+			//ahora creamos el perfil para el acceso del usuario:
+			SegPerfil perfil=new SegPerfil();
+			perfil.setNombrePerfil("Administrador");
+			perfil.setRutaAcceso("seguridades/administrador/menu");
+			perfil.setSegModulo(modulo);
+			mDAO.insertar(perfil);
+			idSegPerfilSegAdministrador=perfil.getIdSegPerfil();
+    	}else {
+    		//si ya existe el modulo, buscamos el perfil de Administrador de seguridad:
+    		SegModulo m=(SegModulo) mDAO.findById(SegModulo.class, idSegModuloSeguridades);
+    		for(SegPerfil p:m.getSegPerfils()) {
+    			if(p.getRutaAcceso().equals("seguridades/administrador/menu"))
+    				idSegPerfilSegAdministrador=p.getIdSegPerfil();
+    		}
     	}
     	//asignacion de accesos:
     	try {
-			asignarModulo(idSegUsuarioAdmin, idSegModuloSeguridades);
+			asignarPerfil(idSegUsuarioAdmin, idSegPerfilSegAdministrador);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -94,14 +111,28 @@ public class ManagerSeguridades {
     	if(idSegModuloAuditoria==0) {
 			SegModulo modulo=new SegModulo();
 			modulo.setNombreModulo("Auditoría");
-			modulo.setRutaAcceso("auditoria/menu");
+			modulo.setIcono("pi pi-eye");
 			mDAO.insertar(modulo);
 			idSegModuloAuditoria=modulo.getIdSegModulo();
 			mAuditoria.mostrarLog(getClass(), "inicializarDemo", "Creado módulo de auditoría (id : "+idSegModuloAuditoria+")");
+			//ahora creamos el perfil para el acceso del usuario:
+			SegPerfil perfil=new SegPerfil();
+			perfil.setNombrePerfil("Auditor");
+			perfil.setRutaAcceso("auditoria/auditor/menu");
+			perfil.setSegModulo(modulo);
+			mDAO.insertar(perfil);
+			idSegPerfilAuditor=perfil.getIdSegPerfil();
+    	}else {
+    		//si ya existe el modulo, buscamos el perfil de Auditor:
+    		SegModulo m=(SegModulo) mDAO.findById(SegModulo.class, idSegModuloAuditoria);
+    		for(SegPerfil p:m.getSegPerfils()) {
+    			if(p.getRutaAcceso().equals("auditoria/auditor/menu"))
+    				idSegPerfilAuditor=p.getIdSegPerfil();
+    		}
     	}
     	//asignacion de accesos:
     	try {
-			asignarModulo(idSegUsuarioAdmin, idSegModuloAuditoria);
+			asignarPerfil(idSegUsuarioAdmin, idSegPerfilAuditor);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -144,11 +175,11 @@ public class ManagerSeguridades {
     		loginDTO.setCorreo(usuario.getCorreo());
     		//aqui puede realizarse el envio de correo de notificacion.
     		
-    		//obtener la lista de modulos a los que tiene acceso:
+    		//obtener la lista de perfiles a los que tiene acceso:
     		List<SegAsignacion> listaAsignaciones=findAsignacionByUsuario(usuario.getIdSegUsuario());
     		for(SegAsignacion asig:listaAsignaciones) {
-    			SegModulo modulo=asig.getSegModulo();
-    			loginDTO.getListaModulos().add(modulo);
+    			SegPerfil perfil=asig.getSegPerfil();
+    			loginDTO.getListaPerfiles().add(perfil);
     		}
     		return loginDTO;
     	}
@@ -204,6 +235,7 @@ public class ManagerSeguridades {
     	if(usuario.getSegAsignacions().size()>0)
     		throw new Exception("No se puede elimininar el usuario porque tiene asignaciones de módulos.");
     	mDAO.eliminar(SegUsuario.class, usuario.getIdSegUsuario());
+    	//TODO agregar uso de LoginDTO para auditar metodo.
     }
     
     public List<SegModulo> findAllModulos(){
@@ -213,57 +245,85 @@ public class ManagerSeguridades {
     public SegModulo insertarModulo(SegModulo nuevoModulo) throws Exception {
     	SegModulo modulo=new SegModulo();
     	modulo.setNombreModulo(nuevoModulo.getNombreModulo());
-    	modulo.setRutaAcceso(nuevoModulo.getRutaAcceso());
+    	modulo.setIcono(nuevoModulo.getIcono());
     	mDAO.insertar(modulo);
     	return modulo;
     }
     
     public void eliminarModulo(int idSegModulo) throws Exception {
+    	SegModulo modulo=(SegModulo) mDAO.findById(SegModulo.class, idSegModulo);
+    	if(modulo.getSegPerfils().size()>0)
+    		throw new Exception("No se puede eliminar un módulo que tiene perfiles asignados.");
     	mDAO.eliminar(SegModulo.class, idSegModulo);
     }
     
     public void actualizarModulo(SegModulo edicionModulo) throws Exception {
     	SegModulo modulo=(SegModulo) mDAO.findById(SegModulo.class, edicionModulo.getIdSegModulo());
     	modulo.setNombreModulo(edicionModulo.getNombreModulo());
-    	modulo.setRutaAcceso(edicionModulo.getRutaAcceso());
+    	modulo.setIcono(edicionModulo.getIcono());
     	mDAO.actualizar(modulo);
     }
     
     public List<SegAsignacion> findAsignacionByUsuario(int idSegUsuario){
     	String consulta="o.segUsuario.idSegUsuario="+idSegUsuario;
-		List<SegAsignacion> listaAsignaciones=mDAO.findWhere(SegAsignacion.class, consulta, null);
+		List<SegAsignacion> listaAsignaciones=mDAO.findWhere(SegAsignacion.class, consulta, "o.segPerfil.segModulo.nombreModulo,o.segPerfil.nombrePerfil");
 		return listaAsignaciones;
     }
     
     /**
-     * Permite asignar el acceso a un modulo del inventario de sistemas.
+     * Permite asignar el acceso a un perfil del inventario de sistemas.
      * @param idSegUsuario El codigo del usuario.
-     * @param idSegModulo El codigo del modulo que se va a asignar.
+     * @param idSegPerfil El codigo del perfil que se va a asignar.
      * @throws Exception
      */
     @SuppressWarnings("unchecked")
-	public void asignarModulo(int idSegUsuario,int idSegModulo) throws Exception{
+	public void asignarPerfil(int idSegUsuario,int idSegPerfil) throws Exception{
     	//Buscar los objetos primarios:
     	SegUsuario usuario=(SegUsuario)mDAO.findById(SegUsuario.class, idSegUsuario);
-    	SegModulo modulo=(SegModulo)mDAO.findById(SegModulo.class, idSegModulo);
+    	SegPerfil perfil=(SegPerfil)mDAO.findById(SegPerfil.class, idSegPerfil);
     	//verificar si ya existe:
-    	String consulta="o.segModulo.idSegModulo="+idSegModulo+" and o.segUsuario.idSegUsuario="+idSegUsuario;
+    	String consulta="o.segPerfil.idSegPerfil="+idSegPerfil+" and o.segUsuario.idSegUsuario="+idSegUsuario;
     	List<SegAsignacion> asignaciones=mDAO.findWhere(SegAsignacion.class, consulta, null);
     	if(asignaciones==null || asignaciones.size()==0) {
 	    	//crear la relacion:
 	    	SegAsignacion asignacion=new SegAsignacion();
-	    	asignacion.setSegModulo(modulo);
+	    	asignacion.setSegPerfil(perfil);
 	    	asignacion.setSegUsuario(usuario);
 	    	//guardar la asignacion:
 	    	mDAO.insertar(asignacion);
-	    	mAuditoria.mostrarLog(getClass(), "asignarModulo", "Modulo "+idSegModulo+" asignado a usuario "+idSegUsuario);
+	    	mAuditoria.mostrarLog(getClass(), "asignarPerfil", "Perfil "+idSegPerfil+" asignado a usuario "+idSegUsuario);
     	}else {
-    		throw new Exception("Ya existe la asignación de usuario/módulo ("+idSegUsuario+"/"+idSegModulo+")");
+    		throw new Exception("Ya existe la asignación de usuario/perfil ("+idSegUsuario+"/"+idSegPerfil+")");
     	}
     }
     
     public void eliminarAsignacion(int idSegAsignacion) throws Exception {
     	mDAO.eliminar(SegAsignacion.class, idSegAsignacion);
+    }
+    
+    public List<SegPerfil> findPerfilesByModulo(int idSegModulo){
+    	List<SegPerfil> listado=mDAO.findWhere(SegPerfil.class, "o.segModulo.idSegModulo="+idSegModulo, "o.nombrePerfil");
+    	return listado;
+    }
+    
+    public SegPerfil insertarPerfil(SegPerfil nuevoPerfil) throws Exception {
+    	SegPerfil perfil=new SegPerfil();
+    	perfil.setNombrePerfil(nuevoPerfil.getNombrePerfil());
+    	perfil.setRutaAcceso(nuevoPerfil.getRutaAcceso());
+    	perfil.setSegModulo(nuevoPerfil.getSegModulo());
+    	mDAO.insertar(perfil);
+    	return perfil;
+    }
+    
+    public void eliminarPerfil(int idSegPerfil) throws Exception {
+    	mDAO.eliminar(SegPerfil.class, idSegPerfil);
+    }
+    
+    public void actualizarPerfil(SegPerfil edicionPerfil) throws Exception {
+    	SegPerfil perfil=(SegPerfil) mDAO.findById(SegPerfil.class, edicionPerfil.getIdSegPerfil());
+    	perfil.setNombrePerfil(edicionPerfil.getNombrePerfil());
+    	perfil.setRutaAcceso(edicionPerfil.getRutaAcceso());
+    	mDAO.actualizar(perfil);
     }
 
 }

@@ -61,9 +61,9 @@ CREATE SEQUENCE public.seg_modulo_id_seg_modulo_seq
 CREATE TABLE public.seg_modulo(
 	id_seg_modulo integer NOT NULL DEFAULT nextval('public.seg_modulo_id_seg_modulo_seq'::regclass),
 	nombre_modulo character varying(50) NOT NULL,
-	ruta_acceso character varying(100) NOT NULL,
+	icono character varying(100),
 	CONSTRAINT seg_modulo_pk PRIMARY KEY (id_seg_modulo),
-	CONSTRAINT uk_modulo_ruta UNIQUE (ruta_acceso)
+	CONSTRAINT uk_nombre_modulo UNIQUE (nombre_modulo)
 
 );
 -- ddl-end --
