@@ -4,6 +4,8 @@
 		<jta-data-source>java:/mmarketdemoDS</jta-data-source>
 		<class>minimarketdemo.model.core.entities.VwThmConsultaRol</class>
 		<class>minimarketdemo.model.core.entities.AudBitacora</class>
+		<class>minimarketdemo.model.core.entities.PryProyecto</class>
+		<class>minimarketdemo.model.core.entities.PryTarea</class>
 		<class>minimarketdemo.model.core.entities.SegAsignacion</class>
 		<class>minimarketdemo.model.core.entities.SegModulo</class>
 		<class>minimarketdemo.model.core.entities.SegPerfil</class>

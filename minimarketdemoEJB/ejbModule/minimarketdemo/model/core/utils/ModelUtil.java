@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Clase utilitaria para la capa modelo.
@@ -46,4 +47,16 @@ public class ModelUtil {
 				
 		return cal.getTime();
 	}
+	
+	/**
+	 * Calcula el numero de dias entre dos fechas.
+	 * @param d1 fecha inicial
+	 * @param d2 fecha final
+	 * @return Numero de dias.
+	 */
+	public static long getDifferenceDays(Date d1, Date d2) {
+	    long diff = d2.getTime() - d1.getTime();
+	    return TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS);
+	}
+
 }
