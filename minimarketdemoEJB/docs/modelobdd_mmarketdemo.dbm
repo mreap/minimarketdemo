@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.1" last-position="75,0" last-zoom="0.95"
+<dbmodel pgmodeler-ver="0.9.1" last-position="0,129" last-zoom="0.95"
 	 default-owner="postgres">
 <database name="mipymes" encoding="UTF8" lc-collate="es_EC.UTF-8" lc-ctype="es_EC.UTF-8" is-template="false" allow-conns="true">
 	<tablespace name="pg_default"/>
@@ -159,6 +159,9 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	</column>
 	<constraint name="thm_cargo_pk" type="pk-constr" table="public.thm_cargo">
 		<columns names="id_thm_cargo" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="uk_thm_cargo" type="uq-constr" table="public.thm_cargo">
+		<columns names="nombre_cargo" ref-type="src-columns"/>
 	</constraint>
 </table>
 

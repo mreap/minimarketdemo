@@ -40,7 +40,8 @@ public class ManagerTHumano {
     }
     
     //EMPLEADOS:
-    public List<ThmEmpleado> findAllThmEmpleado(){
+    @SuppressWarnings("unchecked")
+	public List<ThmEmpleado> findAllThmEmpleado(){
     	return mDAO.findAll(ThmEmpleado.class);
     }
     
@@ -61,7 +62,8 @@ public class ManagerTHumano {
     	return (ThmCargo) mDAO.findById(ThmCargo.class, idThmCargo);
     }
     
-    public List<ThmCargo> findAllThmCargo(){
+    @SuppressWarnings("unchecked")
+	public List<ThmCargo> findAllThmCargo(){
     	return mDAO.findAll(ThmCargo.class, "nombreCargo");
     }
     
@@ -75,16 +77,17 @@ public class ManagerTHumano {
     	return listaDTO;
     }
     
-    public void insertarCargo() throws Exception {
+    public void insertarCargoPasante() throws Exception {
     	ThmCargo cargo=new ThmCargo();
-    	cargo.setNombreCargo("Nuevo cargo");
-    	cargo.setRemuneracionMensual(new BigDecimal(1300));
+    	cargo.setNombreCargo("Pasante");
+    	cargo.setRemuneracionMensual(new BigDecimal(440));
     	mDAO.insertar(cargo);
     }
     
     //ROL DE PAGOS:
     
-    public List<ThmRolCabecera> findAllThmRolCabecera(){
+    @SuppressWarnings("unchecked")
+	public List<ThmRolCabecera> findAllThmRolCabecera(){
     	return mDAO.findAll(ThmRolCabecera.class);
     }
     
@@ -182,7 +185,8 @@ public class ManagerTHumano {
 		
     }
     
-    public List<VwThmConsultaRol> findVwThmConsultaRol(){
+    @SuppressWarnings("unchecked")
+	public List<VwThmConsultaRol> findVwThmConsultaRol(){
     	return mDAO.findAll(VwThmConsultaRol.class);
     }
     

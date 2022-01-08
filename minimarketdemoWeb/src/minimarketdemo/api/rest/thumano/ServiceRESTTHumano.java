@@ -28,12 +28,14 @@ public class ServiceRESTTHumano {
 	}
 	
 	@POST
-	@Path(value = "cargos")
-	public void insertarCargo() {
+	@Path(value = "cargos/pasante")
+	public String insertarCargoPasante() {
 		try {
-			mTHumano.insertarCargo();
+			mTHumano.insertarCargoPasante();
+			return "{\"Resultado\":\"Cargo pasante insertado.\"}";
 		} catch (Exception e) {
 			e.printStackTrace();
+			return "{\"Error\":\""+e.getMessage()+"\"}";
 		}
 	}
 
