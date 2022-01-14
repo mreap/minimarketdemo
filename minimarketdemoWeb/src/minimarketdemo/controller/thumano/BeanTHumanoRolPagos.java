@@ -13,6 +13,7 @@ import minimarketdemo.controller.JSFUtil;
 import minimarketdemo.model.core.entities.SegUsuario;
 import minimarketdemo.model.core.entities.ThmCargo;
 import minimarketdemo.model.core.entities.ThmEmpleado;
+import minimarketdemo.model.core.entities.ThmPeriodoRol;
 import minimarketdemo.model.core.entities.ThmRolCabecera;
 import minimarketdemo.model.seguridades.managers.ManagerSeguridades;
 import minimarketdemo.model.thumano.managers.ManagerTHumano;
@@ -25,20 +26,14 @@ public class BeanTHumanoRolPagos implements Serializable {
 	private ManagerTHumano mTHumano;
 	@EJB
 	private ManagerSeguridades mSeguridades;
-	private List<String> listaPeriodosRol;
+	private List<ThmPeriodoRol> listaPeriodosRol;
 	private List<ThmRolCabecera> listaRolCabeceras;
-	private String periodoRolSeleccionado;
+	private int periodoRolSeleccionado;
 	
 	
 	@PostConstruct
 	public void inicializar() {
-		listaPeriodosRol=new ArrayList<String>();
-		listaPeriodosRol.add("202001");
-		listaPeriodosRol.add("202002");
-		listaPeriodosRol.add("202003");
-		listaPeriodosRol.add("202110");
-		listaPeriodosRol.add("202111");
-		listaPeriodosRol.add("202112");
+
 	}
 
 	public BeanTHumanoRolPagos() {
@@ -47,6 +42,7 @@ public class BeanTHumanoRolPagos implements Serializable {
 	
 	public String actionCargarMenuRoles() {
 		listaRolCabeceras=mTHumano.findAllThmRolCabecera();
+		listaPeriodosRol=mTHumano.findAllThmPeriodoRol();
 		return "roles?faces-redirect=true";
 	}
 	
@@ -61,11 +57,11 @@ public class BeanTHumanoRolPagos implements Serializable {
 		}
 	}
 
-	public List<String> getListaPeriodosRol() {
+	public List<ThmPeriodoRol> getListaPeriodosRol() {
 		return listaPeriodosRol;
 	}
 
-	public void setListaPeriodosRol(List<String> listaPeriodosRol) {
+	public void setListaPeriodosRol(List<ThmPeriodoRol> listaPeriodosRol) {
 		this.listaPeriodosRol = listaPeriodosRol;
 	}
 
@@ -77,11 +73,11 @@ public class BeanTHumanoRolPagos implements Serializable {
 		this.listaRolCabeceras = listaRolCabeceras;
 	}
 
-	public String getPeriodoRolSeleccionado() {
+	public int getPeriodoRolSeleccionado() {
 		return periodoRolSeleccionado;
 	}
 
-	public void setPeriodoRolSeleccionado(String periodoRolSeleccionado) {
+	public void setPeriodoRolSeleccionado(int periodoRolSeleccionado) {
 		this.periodoRolSeleccionado = periodoRolSeleccionado;
 	}
 	

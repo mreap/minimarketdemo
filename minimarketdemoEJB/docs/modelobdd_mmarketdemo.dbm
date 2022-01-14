@@ -3,7 +3,7 @@
 CAUTION: Do not modify this file unless you know what you are doing.
          Unexpected results may occur if the code is changed deliberately.
 -->
-<dbmodel pgmodeler-ver="0.9.1" last-position="0,129" last-zoom="0.95"
+<dbmodel pgmodeler-ver="0.9.1" last-position="0,258" last-zoom="0.95"
 	 default-owner="postgres">
 <database name="mipymes" encoding="UTF8" lc-collate="es_EC.UTF-8" lc-ctype="es_EC.UTF-8" is-template="false" allow-conns="true">
 	<tablespace name="pg_default"/>
@@ -149,7 +149,7 @@ CAUTION: Do not modify this file unless you know what you are doing.
 	<schema name="public"/>
 	<appended-sql><![CDATA[INSERT INTO public.thm_cargo (nombre_cargo,remuneracion_mensual) VALUES ('Director financiero',1300.00);
 INSERT INTO public.thm_cargo (nombre_cargo,remuneracion_mensual) VALUES ('Bodeguero',890.00);]]></appended-sql>
-	<position x="640" y="760"/>
+	<position x="620" y="920"/>
 	<column name="id_thm_cargo" not-null="true" sequence="public.thm_cargo_id_thm_cargo_seq">
 		<type name="integer" length="0"/>
 	</column>
@@ -176,7 +176,7 @@ INSERT INTO public.thm_cargo (nombre_cargo,remuneracion_mensual) VALUES ('Bodegu
 
 <table name="thm_empleado">
 	<schema name="public"/>
-	<position x="680" y="400"/>
+	<position x="660" y="540"/>
 	<column name="id_thm_empleado" not-null="true" sequence="public.thm_empleado_id_thm_empleado_seq">
 		<type name="integer" length="0"/>
 	</column>
@@ -212,15 +212,15 @@ INSERT INTO public.thm_cargo (nombre_cargo,remuneracion_mensual) VALUES ('Bodegu
 
 <table name="thm_rol_cabecera">
 	<schema name="public"/>
-	<position x="120" y="400"/>
+	<position x="120" y="560"/>
 	<column name="id_thm_rol_cabecera" not-null="true" sequence="public.thm_rol_cabecera_id_thm_rol_cabecera_seq">
 		<type name="integer" length="0"/>
 	</column>
 	<column name="id_thm_empleado" not-null="true">
 		<type name="integer" length="0"/>
 	</column>
-	<column name="periodo_rol" not-null="true">
-		<type name="character varying" length="6"/>
+	<column name="id_thm_periodo_rol" not-null="true">
+		<type name="integer" length="6"/>
 	</column>
 	<column name="nombre_cargo" not-null="true">
 		<type name="character varying" length="50"/>
@@ -257,7 +257,7 @@ INSERT INTO public.thm_cargo (nombre_cargo,remuneracion_mensual) VALUES ('Bodegu
 
 <table name="thm_rol_detalle">
 	<schema name="public"/>
-	<position x="140" y="800"/>
+	<position x="120" y="960"/>
 	<column name="id_thm_rol_detalle" not-null="true" sequence="public.thm_rol_detalle_id_thm_rol_detalle_seq">
 		<type name="integer" length="0"/>
 	</column>
@@ -280,23 +280,6 @@ INSERT INTO public.thm_cargo (nombre_cargo,remuneracion_mensual) VALUES ('Bodegu
 		<columns names="id_thm_rol_detalle" ref-type="src-columns"/>
 	</constraint>
 </table>
-
-<view name="vw_thm_consulta_rol">
-	<schema name="public"/>
-	<position x="140" y="1080"/>
-	<reference>
-		<expression><![CDATA[ SELECT trc.id_thm_rol_cabecera,
-    trc.periodo_rol,
-    trc.id_thm_empleado,
-    trc.total,
-    te.horas_extra,
-    su.apellidos
-   FROM thm_rol_cabecera trc,
-    thm_empleado te,
-    seg_usuario su
-  WHERE ((trc.id_thm_empleado = te.id_thm_empleado) AND (te.id_seg_usuario = su.id_seg_usuario));]]></expression>
-	</reference>
-</view>
 
 <sequence name="pry_proyecto_id_pry_proyecto_seq"
 	 start="1" increment="1"
@@ -387,6 +370,51 @@ INSERT INTO public.thm_cargo (nombre_cargo,remuneracion_mensual) VALUES ('Bodegu
 	</constraint>
 </table>
 
+<table name="thm_periodo_rol">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<appended-sql><![CDATA[INSERT INTO public.thm_periodo_rol (nombre_periodo_rol,generado) VALUES ('2021-10',false);
+INSERT INTO public.thm_periodo_rol (nombre_periodo_rol,generado) VALUES ('2021-11',false);
+INSERT INTO public.thm_periodo_rol (nombre_periodo_rol,generado) VALUES ('2021-12',false);
+INSERT INTO public.thm_periodo_rol (nombre_periodo_rol,generado) VALUES ('2022-01',false);
+INSERT INTO public.thm_periodo_rol (nombre_periodo_rol,generado) VALUES ('2022-02',false);]]></appended-sql>
+	<position x="140" y="340"/>
+	<column name="id_thm_periodo_rol" not-null="true">
+		<type name="serial" length="0"/>
+	</column>
+	<column name="nombre_periodo_rol" not-null="true">
+		<type name="character varying" length="7"/>
+	</column>
+	<column name="generado" not-null="true">
+		<type name="boolean" length="0"/>
+	</column>
+	<constraint name="thm_periodo_rol_pk" type="pk-constr" table="public.thm_periodo_rol">
+		<columns names="id_thm_periodo_rol" ref-type="src-columns"/>
+	</constraint>
+	<constraint name="uk_periodo_rol" type="uq-constr" table="public.thm_periodo_rol">
+		<columns names="nombre_periodo_rol" ref-type="src-columns"/>
+	</constraint>
+</table>
+
+<view name="vw_thm_consulta_rol">
+	<schema name="public"/>
+	<role name="postgres"/>
+	<position x="120" y="1220"/>
+	<reference>
+		<expression><![CDATA[SELECT trc.id_thm_rol_cabecera,
+    tpr.nombre_periodo_rol,
+    trc.id_thm_empleado,
+    trc.total,
+    te.horas_extra,
+    su.apellidos
+   FROM thm_rol_cabecera trc,
+    thm_periodo_rol tpr,
+    thm_empleado te,
+    seg_usuario su
+  WHERE ((tpr.id_thm_periodo_rol=trc.id_thm_periodo_rol) AND (trc.id_thm_empleado = te.id_thm_empleado) AND (te.id_seg_usuario = su.id_seg_usuario));]]></expression>
+	</reference>
+</view>
+
 <constraint name="seg_perfil_seg_asignacion_fk" type="fk-constr" comparison-type="MATCH SIMPLE"
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.seg_perfil" table="public.seg_asignacion">
 	<columns names="id_seg_perfil" ref-type="src-columns"/>
@@ -415,6 +443,12 @@ INSERT INTO public.thm_cargo (nombre_cargo,remuneracion_mensual) VALUES ('Bodegu
 	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.thm_empleado" table="public.thm_rol_cabecera">
 	<columns names="id_thm_empleado" ref-type="src-columns"/>
 	<columns names="id_thm_empleado" ref-type="dst-columns"/>
+</constraint>
+
+<constraint name="fk_periodo_rol_cab_rol" type="fk-constr" comparison-type="MATCH FULL"
+	 upd-action="NO ACTION" del-action="NO ACTION" ref-table="public.thm_periodo_rol" table="public.thm_rol_cabecera">
+	<columns names="id_thm_periodo_rol" ref-type="src-columns"/>
+	<columns names="id_thm_periodo_rol" ref-type="dst-columns"/>
 </constraint>
 
 <constraint name="fk_det_cab_rol" type="fk-constr" comparison-type="MATCH FULL"
@@ -484,6 +518,11 @@ INSERT INTO public.thm_cargo (nombre_cargo,remuneracion_mensual) VALUES ('Bodegu
 <relationship name="rel_seg_perfil_seg_modulo" type="relfk"
 	 src-table="public.seg_perfil"
 	 dst-table="public.seg_modulo" reference-fk="fk_perfil_modulo"
+	 src-required="false" dst-required="false"/>
+
+<relationship name="rel_thm_rol_cabecera_thm_periodo_rol" type="relfk"
+	 src-table="public.thm_rol_cabecera"
+	 dst-table="public.thm_periodo_rol" reference-fk="fk_periodo_rol_cab_rol"
 	 src-required="false" dst-required="false"/>
 
 </dbmodel>

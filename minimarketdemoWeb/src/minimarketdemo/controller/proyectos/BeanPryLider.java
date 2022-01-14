@@ -26,11 +26,14 @@ public class BeanPryLider implements Serializable {
 	private ManagerSeguridades mSeguridades;
 	private PryProyecto nuevoProyecto;
 	private List<PryProyecto> listaProyectos;
+	private List<PryProyecto> listaProyectos2;
 	private List<PryTarea> listaTareas;
 	private PryProyecto proyectoSeleccionado;
 	private PryTarea nuevaTarea;
 	private List<SegUsuario> listaUsuarios;
 	private int idSegUsuarioSeleccionado;
+	private int avance;
+	private String nombre;
 	@Inject
 	private BeanSegLogin beanSeagLogin;
 
@@ -40,6 +43,18 @@ public class BeanPryLider implements Serializable {
 	public void inicializar() {
 		listaProyectos=mProyectos.findAllProyectos();
 		nuevoProyecto=mProyectos.inicializarProyecto();
+		avance=100;//filtro para avance de proyecto
+		nombre="%%";//filtro para nombres de proyecto
+	}
+	public void actionListenerConsultarProyectosFiltro() {
+		listaProyectos2=mProyectos.findProyectosFiltro(avance,nombre);
+		JSFUtil.crearMensajeINFO("proyectos consultados: "+listaProyectos2.size());
+	}
+	public List<PryProyecto> getListaProyectos2() {
+		return listaProyectos2;
+	}
+	public void setListaProyectos2(List<PryProyecto> listaProyectos2) {
+		this.listaProyectos2 = listaProyectos2;
 	}
 	public void actionListenerInsertarProyecto() {
 		try {
@@ -111,6 +126,18 @@ public class BeanPryLider implements Serializable {
 	}
 	public void setListaTareas(List<PryTarea> listaTareas) {
 		this.listaTareas = listaTareas;
+	}
+	public int getAvance() {
+		return avance;
+	}
+	public void setAvance(int avance) {
+		this.avance = avance;
+	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 

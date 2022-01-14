@@ -30,9 +30,6 @@ public class ThmRolCabecera implements Serializable {
 	@Column(name="nombre_cargo", nullable=false, length=50)
 	private String nombreCargo;
 
-	@Column(name="periodo_rol", nullable=false, length=6)
-	private String periodoRol;
-
 	@Column(name="subtotal_egresos", nullable=false, precision=7, scale=2)
 	private BigDecimal subtotalEgresos;
 
@@ -51,8 +48,13 @@ public class ThmRolCabecera implements Serializable {
 	private ThmEmpleado thmEmpleado;
 
 	//bi-directional many-to-one association to ThmRolDetalle
-	@OneToMany(mappedBy="thmRolCabecera",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+	@OneToMany(mappedBy="thmRolCabecera",cascade = CascadeType.PERSIST,fetch = FetchType.EAGER)
 	private List<ThmRolDetalle> thmRolDetalles;
+
+	//bi-directional many-to-one association to ThmPeriodoRol
+	@ManyToOne
+	@JoinColumn(name="id_thm_periodo_rol", nullable=false)
+	private ThmPeriodoRol thmPeriodoRol;
 
 	public ThmRolCabecera() {
 	}
@@ -87,14 +89,6 @@ public class ThmRolCabecera implements Serializable {
 
 	public void setNombreCargo(String nombreCargo) {
 		this.nombreCargo = nombreCargo;
-	}
-
-	public String getPeriodoRol() {
-		return this.periodoRol;
-	}
-
-	public void setPeriodoRol(String periodoRol) {
-		this.periodoRol = periodoRol;
 	}
 
 	public BigDecimal getSubtotalEgresos() {
@@ -157,6 +151,14 @@ public class ThmRolCabecera implements Serializable {
 		thmRolDetalle.setThmRolCabecera(null);
 
 		return thmRolDetalle;
+	}
+
+	public ThmPeriodoRol getThmPeriodoRol() {
+		return this.thmPeriodoRol;
+	}
+
+	public void setThmPeriodoRol(ThmPeriodoRol thmPeriodoRol) {
+		this.thmPeriodoRol = thmPeriodoRol;
 	}
 
 }

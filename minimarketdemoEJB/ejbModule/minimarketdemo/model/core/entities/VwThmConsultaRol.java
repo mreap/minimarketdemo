@@ -28,8 +28,8 @@ public class VwThmConsultaRol implements Serializable {
 	@Column(name="id_thm_rol_cabecera")
 	private Integer idThmRolCabecera;
 
-	@Column(name="periodo_rol", length=6)
-	private String periodoRol;
+	@Column(name="nombre_periodo_rol", length=7)
+	private String nombrePeriodoRol;
 
 	@Column(precision=7, scale=2)
 	private BigDecimal total;
@@ -69,12 +69,12 @@ public class VwThmConsultaRol implements Serializable {
 		this.idThmRolCabecera = idThmRolCabecera;
 	}
 
-	public String getPeriodoRol() {
-		return this.periodoRol;
+	public String getNombrePeriodoRol() {
+		return this.nombrePeriodoRol;
 	}
 
-	public void setPeriodoRol(String periodoRol) {
-		this.periodoRol = periodoRol;
+	public void setNombrePeriodoRol(String nombrePeriodoRol) {
+		this.nombrePeriodoRol = nombrePeriodoRol;
 	}
 
 	public BigDecimal getTotal() {

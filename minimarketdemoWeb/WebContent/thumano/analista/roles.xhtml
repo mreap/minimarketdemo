@@ -35,7 +35,7 @@
 				<f:selectItem itemLabel="Seleccione el período..."
 					noSelectionOption="true" />
 				<f:selectItems value="#{beanTHumanoRolPagos.listaPeriodosRol}"
-					var="p" itemLabel="#{p}" itemValue="#{p}"></f:selectItems>
+					var="p" itemLabel="#{p.nombrePeriodoRol}" itemValue="#{p.idThmPeriodoRol}"></f:selectItems>
 			</p:selectOneMenu>
 			<p:commandButton value="Generar rol" icon="pi pi-wallet"
 				actionListener="#{beanTHumanoRolPagos.actionListenerGenerarRolPagos()}"
@@ -46,7 +46,7 @@
 					<h:outputText value="#{cab.idThmRolCabecera}" />
 				</p:column>
 				<p:column headerText="PERIODO">
-					<h:outputText value="#{cab.periodoRol}" />
+					<h:outputText value="#{cab.thmPeriodoRol.nombrePeriodoRol}" />
 				</p:column>
 				<p:column headerText="NOMBRES">
 					<h:outputText value="#{cab.thmEmpleado.segUsuario.apellidos}" />

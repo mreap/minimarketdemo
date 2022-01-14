@@ -6,6 +6,9 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import minimarketdemo.model.auditoria.managers.ManagerAuditoria;
 import minimarketdemo.model.core.entities.PryProyecto;
@@ -23,6 +26,8 @@ import minimarketdemo.model.seguridades.dtos.LoginDTO;
 public class ManagerProyectos {
 	@EJB
 	private ManagerDAO mDAO;
+	@PersistenceContext
+	private EntityManager em;
 	@EJB
 	private ManagerAuditoria mAuditoria;
     /**
@@ -34,6 +39,18 @@ public class ManagerProyectos {
     //FUNCIONES DEL JEFE DE PROYECTOS:
     public List<PryProyecto> findAllProyectos(){
     	return mDAO.findAll(PryProyecto.class);
+    }
+    
+    public List<PryProyecto> findProyectosFiltro(int avance,String nombre){
+    	Query q=em.createQuery("select p from PryProyecto p where p.avance<:avance and p.nombre like :nombre", PryProyecto.class);
+    	q.setParameter("avance", avance);
+    	q.setParameter("nombre", nombre);
+    	List<PryProyecto> lista= q.getResultList();
+    	for(PryProyecto p:lista) {
+    		if(p.getPryTareas()!=null)
+    			p.getPryTareas().size();//precarga de las tareas en memoria
+    	}
+    	return lista;
     }
     public PryProyecto inicializarProyecto() {
     	PryProyecto proyecto=new PryProyecto();

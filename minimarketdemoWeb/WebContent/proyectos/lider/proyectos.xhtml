@@ -19,8 +19,6 @@
 		<p:menubar>
 			<p:menuitem value="Regresar" icon="pi pi-home"
 				action="/menu?faces-redirect=true" />
-			<p:menuitem value="Filtro de Proyectos" icon="pi pi-cog"
-				action="proyectos?faces-redirect=true" />
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
 					icon="pi pi-user">
@@ -33,46 +31,43 @@
 		<p:staticMessage severity="info" summary="Módulo de proyectos"></p:staticMessage>
 	</h:form>
 	<div>
-		<h:form>
-			<p:panelGrid columns="2">
-				<h:outputText value="Nombre de nuevo proyecto:" />
-				<p:inputText value="#{beanPryLider.nuevoProyecto.nombre}"
-					required="true" requiredMessage="Ingrese el nombre del proyecto." />
-				<h:outputText value="Fecha de inicio:" />
-				<p:calendar value="#{beanPryLider.nuevoProyecto.fechaInicio}" />
-				<h:outputText value="Fecha de fin:" />
-				<p:calendar value="#{beanPryLider.nuevoProyecto.fechaFin}"
-					mindate="#{beanPryLider.nuevoProyecto.fechaInicio}" />
-				<p:commandButton value="Insertar" icon="pi pi-save"
-					update="@form,:formTabla"
-					action="#{beanPryLider.actionListenerInsertarProyecto()}"></p:commandButton>
-			</p:panelGrid>
-		</h:form>
+
 		<h:form id="formTabla">
-			<p:dataTable value="#{beanPryLider.listaProyectos}" var="p">
-				<p:column headerText="ID">
+			<h:outputText value="Avance:" />
+			<p:spinner value="#{beanPryLider.avance}" min="0" max="100" />
+			<h:outputText value="Nombre:" />
+			<p:inputText value="#{beanPryLider.nombre}" maxlength="50" />
+			<p:commandButton
+				actionListener="#{beanPryLider.actionListenerConsultarProyectosFiltro()}"
+				update="@form" value="Consultar"></p:commandButton>
+			<p:dataTable value="#{beanPryLider.listaProyectos2}" var="p">
+				<p:column headerText="ID" style="width:50px">
 					<h:outputText value="#{p.idPryProyecto}" />
 				</p:column>
-				<p:column headerText="NOMBRE">
+				<p:column headerText="NOMBRE" style="width:250px">
 					<h:outputText value="#{p.nombre}" />
 				</p:column>
-				<p:column headerText="INICIO">
+				<p:column headerText="INICIO" style="width:100px">
 					<h:outputText value="#{p.fechaInicio}" />
 				</p:column>
-				<p:column headerText="FINAL">
+				<p:column headerText="FINAL" style="width:100px">
 					<h:outputText value="#{p.fechaFin}" />
 				</p:column>
-				<p:column headerText="AVANCE">
+				<p:column headerText="AVANCE" style="width:50px">
 					<h:outputText value="#{p.avance}" />
 				</p:column>
-				<p:column headerText="ESTADO">
+				<p:column headerText="ESTADO" style="width:50px">
 					<h:outputText value="#{p.estado}" />
 				</p:column>
-				<p:column headerText="OPCIONES">
-					<p:commandButton title="Editar" icon="pi pi-pencil" />
-					<p:commandButton title="Eliminar" icon="pi pi-times" />
-					<p:commandButton value="Tareas" icon="pi pi-search"
-						action="#{beanPryLider.actionSeleccionarProyecto(p)}"></p:commandButton>
+				<p:column headerText="TAREAS">
+					<p:dataTable value="#{p.pryTareas}" var="t">
+						<p:column>
+							<h:outputText value="#{t.nombre}" />
+						</p:column>
+						<p:column>
+							<h:outputText value="#{t.avance}" />
+						</p:column>
+					</p:dataTable>
 				</p:column>
 			</p:dataTable>
 		</h:form>

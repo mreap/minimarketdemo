@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 
 import minimarketdemo.model.core.entities.ThmCargo;
 import minimarketdemo.model.core.entities.ThmEmpleado;
+import minimarketdemo.model.core.entities.ThmPeriodoRol;
 import minimarketdemo.model.core.entities.ThmRolCabecera;
 import minimarketdemo.model.core.entities.ThmRolDetalle;
 import minimarketdemo.model.core.entities.VwThmConsultaRol;
@@ -102,11 +103,18 @@ public class ManagerTHumano {
     //ROL DE PAGOS:
     
     @SuppressWarnings("unchecked")
+	public List<ThmPeriodoRol> findAllThmPeriodoRol(){
+    	return mDAO.findAll(ThmPeriodoRol.class, "nombrePeriodoRol");
+    }
+    
+    @SuppressWarnings("unchecked")
 	public List<ThmRolCabecera> findAllThmRolCabecera(){
     	return mDAO.findAll(ThmRolCabecera.class);
     }
     
-    public void generarRolPagos(String periodoRol) throws Exception{
+    public void generarRolPagos(int idThmPeriodoRol) throws Exception{
+    	//Obtenemos la referencia al periodo a generar:
+    	ThmPeriodoRol periodoRol=(ThmPeriodoRol) mDAO.findById(ThmPeriodoRol.class, idThmPeriodoRol);
     	//Iteramos la lista de empleados:
     	List<ThmEmpleado> listaEmpleados=findAllThmEmpleado();
     	if(listaEmpleados.size()==0)
@@ -117,12 +125,14 @@ public class ManagerTHumano {
     		cab.setHorasExtras(empleado.getHorasExtra());
     		cab.setHorasTrabajadas(empleado.getHorasTrabajadas());
     		cab.setNombreCargo(empleado.getThmCargo().getNombreCargo());
-    		cab.setPeriodoRol(periodoRol);
+    		cab.setThmPeriodoRol(periodoRol);
     		cab.setThmEmpleado(empleado);
     		//generar el detalle de cada rol cabecera:
     		generarDetalleRolPagos(cab, empleado);
     		mDAO.insertar(cab);
     	}
+    	periodoRol.setGenerado(true);
+    	mDAO.actualizar(periodoRol);
     }
     
     private void generarDetalleRolPagos(ThmRolCabecera cab,ThmEmpleado emp) {

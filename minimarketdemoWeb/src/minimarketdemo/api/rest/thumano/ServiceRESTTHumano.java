@@ -57,13 +57,11 @@ public class ServiceRESTTHumano {
 			return Response.status(Response.Status.OK) //codigo HTTP 200
 					.entity("Cargo pasante insertado.")
 					.build();
-			//return "{\"Resultado\":\"Cargo pasante insertado.\"}";
 		} catch (Exception e) {
 			e.printStackTrace();
 			return Response.status(Response.Status.BAD_REQUEST) //codigo HTTP 400
 					.entity("Error insertar cargo pasante : " + e.getMessage())
 					.build();
-			//return "{\"Error\":\""+e.getMessage()+"\"}";
 		}
 	}
 	
