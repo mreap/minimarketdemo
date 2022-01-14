@@ -147,6 +147,8 @@ CAUTION: Do not modify this file unless you know what you are doing.
 
 <table name="thm_cargo">
 	<schema name="public"/>
+	<appended-sql><![CDATA[INSERT INTO public.thm_cargo (nombre_cargo,remuneracion_mensual) VALUES ('Director financiero',1300.00);
+INSERT INTO public.thm_cargo (nombre_cargo,remuneracion_mensual) VALUES ('Bodeguero',890.00);]]></appended-sql>
 	<position x="640" y="760"/>
 	<column name="id_thm_cargo" not-null="true" sequence="public.thm_cargo_id_thm_cargo_seq">
 		<type name="integer" length="0"/>

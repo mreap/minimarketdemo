@@ -4,6 +4,10 @@ public class DTOThmCargo {
 	private int idThmCargo;
 	private String nombreCargo;
 	private double remuneracionMensual;
+	
+	public DTOThmCargo() {
+		
+	}
 	public DTOThmCargo(int idThmCargo, String nombreCargo, double remuneracionMensual) {
 		super();
 		this.idThmCargo = idThmCargo;

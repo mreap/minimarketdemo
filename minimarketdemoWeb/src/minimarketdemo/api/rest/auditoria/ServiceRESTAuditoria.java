@@ -27,6 +27,6 @@ public class ServiceRESTAuditoria {
 	@GET
 	@Path(value = "bitacora")
 	public List<AudBitacora> findBitacoraAyer(){
-		return mAuditoria.findBitacoraByFecha(ModelUtil.addDays(new Date(), -1), new Date());
+		return mAuditoria.findBitacoraByFecha(ModelUtil.addDays(new Date(), -10), new Date());
 	}
 }

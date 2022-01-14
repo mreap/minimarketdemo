@@ -77,11 +77,26 @@ public class ManagerTHumano {
     	return listaDTO;
     }
     
+    public void insertarCargo(ThmCargo cargo) throws Exception {
+    	mDAO.insertar(cargo);
+    }
+    
     public void insertarCargoPasante() throws Exception {
     	ThmCargo cargo=new ThmCargo();
     	cargo.setNombreCargo("Pasante");
     	cargo.setRemuneracionMensual(new BigDecimal(440));
     	mDAO.insertar(cargo);
+    }
+    
+    public void actualizarCargo(ThmCargo cargo) throws Exception {
+    	ThmCargo edicionCargo=(ThmCargo) mDAO.findById(ThmCargo.class, cargo.getIdThmCargo());
+    	edicionCargo.setNombreCargo(cargo.getNombreCargo());
+    	edicionCargo.setRemuneracionMensual(cargo.getRemuneracionMensual());
+    	mDAO.actualizar(edicionCargo);
+    }
+    
+    public void eliminarCargo(int idThmCargo) throws Exception {
+    	mDAO.eliminar(ThmCargo.class, idThmCargo);
     }
     
     //ROL DE PAGOS:
