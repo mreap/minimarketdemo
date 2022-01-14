@@ -115,6 +115,8 @@ public class ManagerTHumano {
     public void generarRolPagos(int idThmPeriodoRol) throws Exception{
     	//Obtenemos la referencia al periodo a generar:
     	ThmPeriodoRol periodoRol=(ThmPeriodoRol) mDAO.findById(ThmPeriodoRol.class, idThmPeriodoRol);
+    	if(periodoRol.getGenerado()==true)
+    		throw new Exception("El período indicado ya fue generado.");
     	//Iteramos la lista de empleados:
     	List<ThmEmpleado> listaEmpleados=findAllThmEmpleado();
     	if(listaEmpleados.size()==0)

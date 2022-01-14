@@ -40,7 +40,13 @@ public class ManagerProyectos {
     public List<PryProyecto> findAllProyectos(){
     	return mDAO.findAll(PryProyecto.class);
     }
-    
+    /**
+     * Consulta de proyectos con filtro. Este metodo se usa como
+     * ejemplo de uso directo de EntityManager (sin ManagerDAO)
+     * @param avance El avance maximo para la busqueda.
+     * @param nombre El nombre de busqueda.
+     * @return
+     */
     public List<PryProyecto> findProyectosFiltro(int avance,String nombre){
     	Query q=em.createQuery("select p from PryProyecto p where p.avance<:avance and p.nombre like :nombre", PryProyecto.class);
     	q.setParameter("avance", avance);
