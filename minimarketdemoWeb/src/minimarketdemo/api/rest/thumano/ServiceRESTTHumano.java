@@ -33,6 +33,18 @@ public class ServiceRESTTHumano {
 		return mTHumano.findAllDTOThmCargo();
 	}
 	
+	@GET
+	@Path(value = "cargos/{idThmCargo}")
+	public DTOThmCargo findDTOThmCargoById(@PathParam("idThmCargo") int idThmCargo){
+		try {
+			System.out.println("GET /cargos/"+idThmCargo);
+			return mTHumano.findDTOThmCargoById(idThmCargo);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	@POST
 	@Path(value = "cargos")
 	public String insertarCargo(DTOThmCargo cargo) {

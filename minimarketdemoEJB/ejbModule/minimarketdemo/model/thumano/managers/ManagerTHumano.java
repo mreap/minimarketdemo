@@ -77,6 +77,14 @@ public class ManagerTHumano {
     	}
     	return listaDTO;
     }
+    public DTOThmCargo findDTOThmCargoById(int idThmCargo) throws Exception {
+    	DTOThmCargo dtocargo=new DTOThmCargo();
+    	ThmCargo cargo=findByIdThmCargo(idThmCargo);
+    	dtocargo.setIdThmCargo(idThmCargo);
+    	dtocargo.setNombreCargo(cargo.getNombreCargo());
+    	dtocargo.setRemuneracionMensual(cargo.getRemuneracionMensual().doubleValue());
+    	return dtocargo;
+    }
     
     public void insertarCargo(ThmCargo cargo) throws Exception {
     	mDAO.insertar(cargo);
