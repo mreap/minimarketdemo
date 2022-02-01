@@ -10,6 +10,9 @@
 </f:metadata>
 <h:head>
 	<title>Roles</title>
+	<f:facet name="first">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	</f:facet>
 </h:head>
 <body>
 	<p:growl>
@@ -18,6 +21,8 @@
 	<h:form>
 		<p:menubar>
 			<p:menuitem value="Regresar" icon="pi pi-home" action="menu" />
+			<p:menuitem value="Reporte" icon="pi pi-book" ajax="false"
+				action="#{beanTHumanoRolPagos.actionReporte()}" />
 			<f:facet name="options">
 				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
 					icon="pi pi-user">
@@ -35,55 +40,62 @@
 				<f:selectItem itemLabel="Seleccione el período..."
 					noSelectionOption="true" />
 				<f:selectItems value="#{beanTHumanoRolPagos.listaPeriodosRol}"
-					var="p" itemLabel="#{p.nombrePeriodoRol}" itemValue="#{p.idThmPeriodoRol}"></f:selectItems>
+					var="p" itemLabel="#{p.nombrePeriodoRol}"
+					itemValue="#{p.idThmPeriodoRol}"></f:selectItems>
 			</p:selectOneMenu>
 			<p:commandButton value="Generar rol" icon="pi pi-wallet"
 				actionListener="#{beanTHumanoRolPagos.actionListenerGenerarRolPagos()}"
 				update="@form"></p:commandButton>
-			<p:dataTable value="#{beanTHumanoRolPagos.listaRolCabeceras}"
-				var="cab">
-				<p:column headerText="ID" style="width:40px">
-					<h:outputText value="#{cab.idThmRolCabecera}" />
-				</p:column>
-				<p:column headerText="PERIODO">
-					<h:outputText value="#{cab.thmPeriodoRol.nombrePeriodoRol}" />
-				</p:column>
-				<p:column headerText="NOMBRES">
-					<h:outputText value="#{cab.thmEmpleado.segUsuario.apellidos}" />
-				</p:column>
-				<p:column headerText="CARGO">
-					<h:outputText value="#{cab.nombreCargo}" />
-				</p:column>
-				<p:column headerText="INGRESOS" style="text-align:right">
-					<h:outputText value="#{cab.subtotalIngresos}" />
-				</p:column>
-				<p:column headerText="INGRESOS ADICIONALES" style="text-align:right">
-					<h:outputText value="#{cab.subtotalIngresosAdicionales}" />
-				</p:column>
-				<p:column headerText="EGRESOS" style="text-align:right">
-					<h:outputText value="#{cab.subtotalEgresos}" />
-				</p:column>
-				<p:column headerText="TOTAL" style="text-align:right">
-					<h:outputText value="#{cab.total}" />
-				</p:column>
-				<p:column headerText="REPORTE">
-					<p:commandButton icon="pi pi-search" title="reporte"
-						id="cmdReporte" />
-					<p:overlayPanel for="cmdReporte" showCloseIcon="true"
-						style="width:350px">
+			<div class="card">
+				<p:dataTable value="#{beanTHumanoRolPagos.listaRolCabeceras}"
+					var="cab">
+					<p:column headerText="ID" style="width:40px" responsivePriority="3">
+						<h:outputText value="#{cab.idThmRolCabecera}" />
+					</p:column>
+					<p:column headerText="PERIODO" responsivePriority="1">
+						<h:outputText value="#{cab.thmPeriodoRol.nombrePeriodoRol}" />
+					</p:column>
+					<p:column headerText="NOMBRES" responsivePriority="1">
+						<h:outputText value="#{cab.thmEmpleado.segUsuario.apellidos}" />
+					</p:column>
+					<p:column headerText="CARGOA" responsivePriority="2">
+						<h:outputText value="#{cab.nombreCargo}" />
+					</p:column>
+					<p:column headerText="INGRESOS" style="text-align:right"
+						responsivePriority="3">
+						<h:outputText value="#{cab.subtotalIngresos}" />
+					</p:column>
+					<p:column headerText="INGRESOS ADICIONALES"
+						style="text-align:right" responsivePriority="3">
+						<h:outputText value="#{cab.subtotalIngresosAdicionales}" />
+					</p:column>
+					<p:column headerText="EGRESOS" style="text-align:right"
+						responsivePriority="3">
+						<h:outputText value="#{cab.subtotalEgresos}" />
+					</p:column>
+					<p:column headerText="TOTAL" style="text-align:right"
+						responsivePriority="1">
+						<h:outputText value="#{cab.total}" />
+					</p:column>
+					<p:column headerText="REPORTE" responsivePriority="2">
+						<p:commandButton icon="pi pi-search" title="reporte"
+							id="cmdReporte" />
+						<p:overlayPanel for="cmdReporte" showCloseIcon="true"
+							style="width:350px">
 
-						<p:dataTable value="#{cab.thmRolDetalles}" var="det">
-							<p:column headerText="Concepto">
-								<h:outputText value="#{det.descripcion}" />
-							</p:column>
-							<p:column style="text-align:right;width:60px" headerText="Valor">
-								<h:outputText value="#{det.valor}" />
-							</p:column>
-						</p:dataTable>
+							<p:dataTable value="#{cab.thmRolDetalles}" var="det">
+								<p:column headerText="Concepto">
+									<h:outputText value="#{det.descripcion}" />
+								</p:column>
+								<p:column style="text-align:right;width:60px" headerText="Valor">
+									<h:outputText value="#{det.valor}" />
+								</p:column>
+							</p:dataTable>
 
-					</p:overlayPanel>
-				</p:column>
-			</p:dataTable>
+						</p:overlayPanel>
+					</p:column>
+				</p:dataTable>
+			</div>
 		</h:form>
 	</p:panel>
 </body>
