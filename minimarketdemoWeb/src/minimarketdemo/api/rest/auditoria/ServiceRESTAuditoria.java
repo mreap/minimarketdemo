@@ -22,7 +22,7 @@ public class ServiceRESTAuditoria {
 	@EJB
 	private ManagerAuditoria mAuditoria;
 	
-	//ruta completa es:
+	// la ruta completa es:
 	// /apirest/auditoria/bitacora
 	@GET
 	@Path(value = "bitacora")
