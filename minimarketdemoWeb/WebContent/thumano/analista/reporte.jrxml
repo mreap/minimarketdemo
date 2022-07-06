@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.17.0.final using JasperReports Library version 6.17.0-6d93193241dd8cc42629e188b94f9e0bc5722efd  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporte" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="9d3070ca-039e-4669-a460-7ac03524673c">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="mipymesDS"/>
+	<queryString language="SQL">
+		<![CDATA[SELECT trc.id_thm_rol_cabecera,
+tpr.nombre_periodo_rol,
+trc.id_thm_empleado,
+trc.total,
+te.horas_extra,
+su.apellidos || ' ' || su.nombres as nombres_completos,
+trd.tipo_detalle,
+trd.descripcion,
+trd.valor,
+trd.orden
+FROM thm_rol_cabecera trc,
+thm_rol_detalle trd,
+thm_empleado te,
+seg_usuario su,
+thm_periodo_rol tpr
+WHERE trc.id_thm_empleado = te.id_thm_empleado AND te.id_seg_usuario = su.id_seg_usuario and
+trc.id_thm_rol_cabecera=trd.id_thm_rol_cabecera AND trc.id_thm_periodo_rol = tpr.id_thm_periodo_rol
+ORDER BY trc.id_thm_rol_cabecera,trd.orden]]>
+	</queryString>
+	<field name="id_thm_rol_cabecera" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="id_thm_rol_cabecera"/>
+		<property name="com.jaspersoft.studio.field.label" value="id_thm_rol_cabecera"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="thm_rol_cabecera"/>
+	</field>
+	<field name="nombre_periodo_rol" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombre_periodo_rol"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombre_periodo_rol"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="thm_periodo_rol"/>
+	</field>
+	<field name="total" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="total"/>
+		<property name="com.jaspersoft.studio.field.label" value="total"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="thm_rol_cabecera"/>
+	</field>
+	<field name="nombres_completos" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="nombres_completos"/>
+		<property name="com.jaspersoft.studio.field.label" value="nombres_completos"/>
+	</field>
+	<field name="tipo_detalle" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="tipo_detalle"/>
+		<property name="com.jaspersoft.studio.field.label" value="tipo_detalle"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="thm_rol_detalle"/>
+	</field>
+	<field name="descripcion" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.name" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.label" value="descripcion"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="thm_rol_detalle"/>
+	</field>
+	<field name="valor" class="java.math.BigDecimal">
+		<property name="com.jaspersoft.studio.field.name" value="valor"/>
+		<property name="com.jaspersoft.studio.field.label" value="valor"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="thm_rol_detalle"/>
+	</field>
+	<field name="orden" class="java.lang.Integer">
+		<property name="com.jaspersoft.studio.field.name" value="orden"/>
+		<property name="com.jaspersoft.studio.field.label" value="orden"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="thm_rol_detalle"/>
+	</field>
+	<group name="Group1">
+		<groupExpression><![CDATA[$F{id_thm_rol_cabecera}]]></groupExpression>
+		<groupHeader>
+			<band height="33">
+				<textField evaluationTime="Report">
+					<reportElement mode="Opaque" x="350" y="0" width="205" height="32" forecolor="#006699" backcolor="#E6E6E6" uuid="55cab89e-0a9f-42b5-947c-9e735cd11e6b"/>
+					<textElement>
+						<font size="14" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{id_thm_rol_cabecera}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement x="0" y="0" width="79" height="20" uuid="9ad2ecb6-cd0b-470a-94c4-6895615bff28">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7c360c5c-3af1-421f-a554-46bad7ceebae"/>
+					</reportElement>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombre_periodo_rol}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement x="158" y="0" width="79" height="20" uuid="5540720a-df62-4e5d-965a-ceeddc081354">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6605f381-03d8-4c63-a304-6052127fcc64"/>
+					</reportElement>
+					<textElement>
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nombres_completos}]]></textFieldExpression>
+				</textField>
+				<textField textAdjust="StretchHeight">
+					<reportElement x="79" y="0" width="79" height="20" uuid="c20c8bc9-1fd5-43fc-b593-853eeaa6fcf4">
+						<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="29049431-7a00-482f-86b7-a6e432aed173"/>
+					</reportElement>
+					<textElement textAlignment="Right">
+						<font size="14"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="-20" y="32" width="595" height="1" forecolor="#666666" uuid="6dece753-1497-458f-872b-0947de4c01de"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<background>
+		<band/>
+	</background>
+	<title>
+		<band height="72">
+			<frame>
+				<reportElement mode="Opaque" x="-20" y="-20" width="595" height="92" backcolor="#006699" uuid="f3840156-2661-4d74-9300-13de11c56073"/>
+				<staticText>
+					<reportElement x="20" y="20" width="340" height="43" forecolor="#FFFFFF" uuid="3db08839-0e44-4deb-b77f-6b63eeba87a1"/>
+					<textElement>
+						<font size="34" isBold="true"/>
+					</textElement>
+					<text><![CDATA[ROLES DE PAGO]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="395" y="43" width="180" height="20" forecolor="#FFFFFF" uuid="ce4299f2-f298-42ff-a618-c1e58460d066"/>
+					<textElement textAlignment="Right">
+						<font size="14" isBold="false"/>
+					</textElement>
+					<text><![CDATA[minimarketdemo]]></text>
+				</staticText>
+			</frame>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="13"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="21">
+			<line>
+				<reportElement x="-20" y="20" width="595" height="1" forecolor="#666666" uuid="8ad02af9-22b4-430c-a13f-2d65851cfabe"/>
+			</line>
+			<staticText>
+				<reportElement mode="Opaque" x="0" y="0" width="79" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="07313e08-7d21-4c87-8146-08fd6a8f515d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7c360c5c-3af1-421f-a554-46bad7ceebae"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[nombre_periodo_rol]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="79" y="0" width="79" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="4724eca6-f974-45c7-8145-7ff4e0cf7029">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="29049431-7a00-482f-86b7-a6e432aed173"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[total]]></text>
+			</staticText>
+			<staticText>
+				<reportElement mode="Opaque" x="158" y="0" width="172" height="20" forecolor="#006699" backcolor="#E6E6E6" uuid="a1c162f2-ba12-4e51-a4ba-b382978577b4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6605f381-03d8-4c63-a304-6052127fcc64"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[nombres_completos]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="19" width="555" height="1" uuid="666290f7-d510-49d3-a3bf-9498c9db10d7"/>
+			</line>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="237" y="0" width="79" height="20" uuid="96ee1d82-a527-4a80-b0b5-e64b1c133917">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d9c2dd39-b26a-40c6-a834-8eb3b2856f0c"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tipo_detalle}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="316" y="0" width="79" height="20" uuid="85b33ae5-8d54-48e9-b9d3-7fdc365d4657">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="50034d52-47a6-45b2-ba3e-42a683a41941"/>
+				</reportElement>
+				<textElement>
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{descripcion}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="395" y="0" width="79" height="20" uuid="5e740c18-c074-4f17-8d96-30274ac79293">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="b33d61d6-e766-401f-ab17-3f9d24c24ba7"/>
+				</reportElement>
+				<textElement textAlignment="Right">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{valor}]]></textFieldExpression>
+			</textField>
+			<textField textAdjust="StretchHeight">
+				<reportElement x="474" y="0" width="79" height="20" uuid="6c8c3fcc-c2e3-4536-8548-4ee6ecbb98d7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="98d98a70-c732-415a-b6e4-bf096c494715"/>
+				</reportElement>
+				<textElement textAlignment="Center">
+					<font size="14"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{orden}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band/>
+	</columnFooter>
+	<pageFooter>
+		<band height="17">
+			<textField>
+				<reportElement mode="Opaque" x="0" y="4" width="515" height="13" backcolor="#E6E6E6" uuid="f31649c7-c832-4965-a181-6b9e18e1f76b"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement mode="Opaque" x="515" y="4" width="40" height="13" backcolor="#E6E6E6" uuid="5fc58973-8e2e-46d2-9637-a17e430acb36"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField pattern="EEEEE dd MMMMM yyyy">
+				<reportElement x="0" y="4" width="100" height="13" uuid="c1ae9fdb-7ed4-4a63-bd8a-99adb584c4b5"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band/>
+	</summary>
+</jasperReport>
