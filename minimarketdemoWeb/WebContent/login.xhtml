@@ -11,6 +11,7 @@
 	<meta name="viewport"
 		content="width=device-width, user-scalable=no,
 			initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
+	<h:outputStylesheet name="minimarketdemo" library="css"></h:outputStylesheet>
 </h:head>
 <body>
 	<div align="center">
@@ -24,8 +25,10 @@
 					<p:inputText value="#{beanSegLogin.idSegUsuario}" />
 					<h:outputText value="Clave:" />
 					<p:password value="#{beanSegLogin.clave}" />
+					
 					<p:commandButton value="Login"
 						action="#{beanSegLogin.actionLogin()}" icon="pi pi-key"></p:commandButton>
+					<p:graphicImage name="primefaces-logo.svg" library="images"></p:graphicImage>
 				</p:panelGrid>
 			</p:panel>
 		</h:form>
