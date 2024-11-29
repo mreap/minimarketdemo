@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+<f:metadata>
+	<f:event listener="#{beanSegLogin.actionVerificarLogin()}"
+		type="preRenderView"></f:event>
+</f:metadata>
+
+<h:head>
+	<title>CRUD Estudiantes</title>
+
+</h:head>
+<body>
+	<h:form>
+		<p:menubar>
+			<p:menuitem value="Regresar" icon="pi pi-home" action="/menu" />
+			<f:facet name="options">
+				<p:menuButton value="#{beanSegLogin.loginDTO.correo}"
+					icon="pi pi-user">
+					<p:menuitem value="Perfil" icon="pi pi-cog"></p:menuitem>
+					<p:menuitem value="Cerrar sesión" icon="pi pi-sign-out"
+						action="#{beanSegLogin.actionCerrarSesion()}"></p:menuitem>
+				</p:menuButton>
+			</f:facet>
+		</p:menubar>
+	</h:form>
+	<p:panel>
+		<!-- Título y mensaje -->
+		<p:staticMessage severity="info" summary="Módulo de Estudiantes"></p:staticMessage>
+		<h:form id="formEstudiantes">
+			<!-- Formulario de Estudiantes -->
+			<h3>Formulario de Estudiante</h3>
+			<p:panel header="Datos del Estudiante">
+				<h:panelGrid columns="2" columnClasses="label,field">
+					<h:outputLabel for="nombre" value="Nombre:" />
+					<h:inputText id="nombre"
+						value="#{beanEstudiante.estudiante.nombre}" required="true" />
+
+					<h:outputLabel for="apellido" value="Apellido:" />
+					<h:inputText id="apellido"
+						value="#{beanEstudiante.estudiante.apellido}" required="true" />
+
+					<h:outputLabel for="email" value="Correo Electrónico:" />
+					<h:inputText id="email" value="#{beanEstudiante.estudiante.email}"
+						required="true" />
+
+					<h:outputLabel for="fechaNacimiento" value="Fecha de Nacimiento:" />
+					<h:inputText id="fechaNacimiento"
+						value="#{beanEstudiante.estudiante.fechaNacimiento}"
+						required="true" />
+
+					<!-- <h:outputLabel for="ciudad" value="Ciudad:" />
+				<p:selectOneMenu id="ciudad" value="#{beanEstudiante.estudiante.estCiudad.id}" required="true">
+					<f:selectItem itemLabel="Seleccione una ciudad" itemValue="" />
+					<f:selectItems value="#{beanCiudad.listaCiudades}" var="ciudad" itemLabel="#{ciudad.nombre}" itemValue="#{ciudad.id}" />
+				</p:selectOneMenu> -->
+				</h:panelGrid>
+
+				<!-- Botones del CRUD -->
+
+			</p:panel>
+		</h:form>
+		<p:panel>
+			<p:commandButton value="Crear" icon="pi pi-plus"
+				action="#{beanEstudiante.crearEstudiante}" update=":formEstudiantes" />
+		</p:panel>
+	</p:panel>
+	<p:panel>
+		<!-- Tabla para mostrar los estudiantes -->
+		<p:dataTable value="#{beanEstudiante.listaEstudiantes}"
+			var="estudiante" editable="true">
+			<p:column headerText="ID">
+				<h:outputText value="#{estudiante.id}" />
+			</p:column>
+			<p:column headerText="Nombre">
+				<h:outputText value="#{estudiante.nombre}" />
+			</p:column>
+			<p:column headerText="Apellido">
+				<h:outputText value="#{estudiante.apellido}" />
+			</p:column>
+			<p:column headerText="Correo">
+				<h:outputText value="#{estudiante.email}" />
+			</p:column>
+			<p:column headerText="Ciudad">
+				<h:outputText value="#{estudiante.estCiudad.nombre}" />
+			</p:column>
+
+			<p:column>
+				<p:commandButton icon="pi pi-pencil" title="Editar"
+					action="#{beanEstudiante.cargarEstudiante(estudiante.id)}"
+					update=":formEstudiantes" />
+				<p:commandButton value="Actualizar" icon="pi pi-refresh"
+				action="#{beanEstudiante.actualizarEstudiante(estudiante.id)}"
+				update=":formEstudiantes" />
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+
+</body>
+</html>

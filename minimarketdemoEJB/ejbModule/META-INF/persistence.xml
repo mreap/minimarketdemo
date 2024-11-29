@@ -15,5 +15,7 @@
 		<class>minimarketdemo.model.core.entities.ThmRolCabecera</class>
 		<class>minimarketdemo.model.core.entities.ThmRolDetalle</class>
 		<class>minimarketdemo.model.core.entities.VwThmConsultaRol</class>
+		<class>minimarketdemo.model.core.entities.EstCiudad</class>
+		<class>minimarketdemo.model.core.entities.EstEstudiante</class>
 	</persistence-unit>
 </persistence>
