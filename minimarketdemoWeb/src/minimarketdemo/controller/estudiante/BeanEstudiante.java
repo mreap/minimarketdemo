@@ -24,6 +24,7 @@ public class BeanEstudiante implements Serializable {
     private ManagerCiudad managerCiudad; // Para obtener las ciudades
 
     private EstEstudiante estudiante;
+    private Integer estudianteSeleccionado;
     private List<EstEstudiante> listaEstudiantes;
     private List<EstCiudad> ciudades; // Lista de ciudades para el selectBox
 
@@ -41,9 +42,9 @@ public class BeanEstudiante implements Serializable {
     }
 
     public List<EstEstudiante> getListaEstudiantes() {
-        if (listaEstudiantes == null) {
+
             listaEstudiantes = managerEstudiante.obtenerTodosEstudiantes();
-        }
+
         return listaEstudiantes;
     }
 
@@ -52,6 +53,12 @@ public class BeanEstudiante implements Serializable {
             ciudades = managerCiudad.obtenerTodasCiudades();
         }
         return ciudades;
+    }
+    
+    public Integer formCiudadData(Integer id) {
+    	if(id == null)
+    		return 0;
+    	return id;
     }
 
     // Métodos CRUD
@@ -76,6 +83,18 @@ public class BeanEstudiante implements Serializable {
             managerEstudiante.eliminarEstudiante(id);
         }
         return "listaEstudiantes?faces-redirect=true";
+    }
+    public String eliminarEstudiante() {
+        return eliminarEstudiante(estudianteSeleccionado);
+    }
+    public String capturarEliminarEstudiante(Integer id) {
+    	try {
+			//capturamos el valor enviado desde el DataTable:
+			estudianteSeleccionado = id;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "";
     }
 
     // Método para pre-cargar los datos de un estudiante (por si se está actualizando)
