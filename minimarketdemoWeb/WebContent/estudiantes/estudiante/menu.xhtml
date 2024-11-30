@@ -63,9 +63,6 @@
 					<p:commandButton value="Crear" icon="pi pi-plus"
 						action="#{beanEstudiante.crearEstudiante}"
 						update=":formEstudiantes, :mensajes, :tableEstudiantes" />
-					<p:commandButton value="Actualizar" icon="pi pi-refresh"
-						action="#{beanEstudiante.actualizarEstudiante}"
-						update=":formEstudiantes" />
 				</h:panelGrid>
 
 			</p:panel>
@@ -90,13 +87,13 @@
 				<p:column headerText="Ciudad">
 					<h:outputText value="#{estudiante.estCiudad.nombre}" />
 				</p:column>
-
 				<p:column>
-					<!-- <p:commandButton icon="pi pi-pencil" title="Editar"
+					<!-- Botón Editar -->
+					<p:commandButton icon="pi pi-pencil" title="Editar"
 						action="#{beanEstudiante.cargarEstudiante(estudiante.id)}"
-						update=":tableEstudiantes:dialogEditarEstudiante"
-						onclick="PF('dialogEditarEstudiante').show();" />
- -->
+						update=":formEditarEstudiante"
+						oncomplete="PF('dialogEditarEstudiante').show();" />
+					<!-- Botón Eliminar -->
 					<p:commandButton icon="pi pi-times"
 						action="#{beanEstudiante.capturarEliminarEstudiante(estudiante.id)}"
 						update=":tableEstudiantes:menuEliminar"
@@ -104,6 +101,8 @@
 				</p:column>
 			</p:dataTable>
 		</p:panel>
+
+		<!-- Confirmación de eliminación -->
 		<p:confirmDialog message="¿Seguro deseas eliminar el estudiante?"
 			header="Eliminar Estudiante" severity="alert" widgetVar="menu"
 			id="menuEliminar">
@@ -113,9 +112,47 @@
 			<p:commandButton value="Cancelar" onclick="PF('menu').hide();"
 				type="button" />
 		</p:confirmDialog>
-
-
 	</h:form>
+	<p:dialog id="dialogEditarEstudiante" header="Editar Estudiante"
+		widgetVar="dialogEditarEstudiante" modal="true" showEffect="fade"
+		hideEffect="fade">
+		<h:form id="formEditarEstudiante">
+			<h:panelGrid columns="2" columnClasses="label,field">
+				<h:outputLabel for="nombre" value="Nombre:" />
+				<h:inputText id="nombre" value="#{beanEstudiante.estudiante.nombre}"
+					required="true" />
+
+				<h:outputLabel for="apellido" value="Apellido:" />
+				<h:inputText id="apellido"
+					value="#{beanEstudiante.estudiante.apellido}" required="true" />
+
+				<h:outputLabel for="email" value="Correo Electrónico:" />
+				<h:inputText id="email" value="#{beanEstudiante.estudiante.email}"
+					required="true" />
+
+				<h:outputLabel for="fechaNacimiento" value="Fecha de Nacimiento:" />
+				<p:calendar id="fechaNacimiento"
+					value="#{beanEstudiante.estudiante.fechaNacimiento}"
+					pattern="yyyy-MM-dd" required="true" showIcon="true" />
+
+				<h:outputLabel for="ciudad" value="Ciudad:" />
+				<p:selectOneMenu id="ciudad"
+					value="#{beanEstudiante.estudiante.estCiudad.id}" required="true">
+					<f:selectItem itemLabel="Seleccione una ciudad" itemValue="" />
+					<f:selectItems value="#{beanCiudad.listaCiudades}" var="ciudad"
+						itemLabel="#{ciudad.nombre}" itemValue="#{ciudad.id}" />
+				</p:selectOneMenu>
+			</h:panelGrid>
+
+			<p:commandButton value="Guardar" icon="pi pi-save"
+				action="#{beanEstudiante.actualizarEstudiante}"
+				update=":tableEstudiantes, :mensajes"
+				oncomplete="PF('dialogEditarEstudiante').hide();" />
+			<p:commandButton value="Cancelar" icon="pi pi-times"
+				onclick="PF('dialogEditarEstudiante').hide();" type="button" />
+		</h:form>
+	</p:dialog>
+
 
 </body>
 </html>

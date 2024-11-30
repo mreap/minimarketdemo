@@ -103,11 +103,20 @@ public class BeanEstudiante implements Serializable {
         return null; // Permanece en la misma página después de ejecutar
     }
     
-    public String actualizarEstudiante() {
-        if (estudiante != null && estudiante.getEstCiudad() != null) {
-            managerEstudiante.actualizarEstudiante(estudiante.getId(), estudiante.getNombre(), estudiante.getApellido(), estudiante.getEmail(), estudiante.getFechaNacimiento(), estudiante.getEstCiudad().getId());
+    public void actualizarEstudiante() {
+        try {
+            managerEstudiante.actualizarEstudiante(estudiante.getId(),
+                                                   estudiante.getNombre(),
+                                                   estudiante.getApellido(),
+                                                   estudiante.getEmail(),
+                                                   estudiante.getFechaNacimiento(),
+                                                   estudiante.getEstCiudad().getId());
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
+                    "Éxito", "Estudiante actualizado correctamente."));
+        } catch (Exception e) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error", "No se pudo actualizar el estudiante: " + e.getMessage()));
         }
-        return "listaEstudiantes?faces-redirect=true";
     }
 
     public String eliminarEstudiante(Integer id) {
@@ -132,5 +141,10 @@ public class BeanEstudiante implements Serializable {
     // Método para pre-cargar los datos de un estudiante (por si se está actualizando)
     public void cargarEstudiante(Integer id) {
         estudiante = managerEstudiante.obtenerEstudiantePorId(id);
+        if (estudiante == null) {
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
+                    "Error", "No se pudo cargar el estudiante."));
+        }
     }
+
 }
