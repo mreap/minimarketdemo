@@ -66,26 +66,43 @@ public class BeanEstudiante implements Serializable {
     // Métodos CRUD
     public String crearEstudiante() {
         try {
-            System.out.println("Datos del estudiante:");
-            System.out.println("Nombre: " + estudiante.getNombre());
-            System.out.println("Apellido: " + estudiante.getApellido());
-            System.out.println("Email: " + estudiante.getEmail());
-            System.out.println("Fecha Nacimiento: " + estudiante.getFechaNacimiento());
-            System.out.println("ID Ciudad: " + estudiante.getEstCiudad().getId());
-
-            if (estudiante != null && estudiante.getEstCiudad() != null) {
-                managerEstudiante.crearEstudiante(estudiante.getNombre(), 
-                                                  estudiante.getApellido(), 
-                                                  estudiante.getEmail(), 
-                                                  estudiante.getFechaNacimiento(), 
-                                                  estudiante.getEstCiudad().getId());
-                estudiante = new EstEstudiante(); // Reseteamos el objeto para un nuevo registro
+            if (estudiante.getEstCiudad() == null || estudiante.getEstCiudad().getId() == null) {
+                FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_WARN, 
+                                                    "Advertencia", 
+                                                    "Debe seleccionar una ciudad.");
+                FacesContext.getCurrentInstance().addMessage(null, msg);
+                return null; // No redirigir, permanece en la misma página
             }
+
+            managerEstudiante.crearEstudiante(
+                estudiante.getNombre(),
+                estudiante.getApellido(),
+                estudiante.getEmail(),
+                estudiante.getFechaNacimiento(),
+                estudiante.getEstCiudad().getId()
+            );
+
+            // Agregar mensaje de éxito
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, 
+                                                "Éxito", 
+                                                "¡El estudiante fue creado correctamente!");
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+
+            // Reiniciar el objeto estudiante
+            estudiante = new EstEstudiante();
+            estudiante.setEstCiudad(new EstCiudad());
+
         } catch (Exception e) {
+            // Agregar mensaje de error
+            FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_ERROR, 
+                                                "Error", 
+                                                "Ocurrió un error al crear el estudiante: " + e.getMessage());
+            FacesContext.getCurrentInstance().addMessage(null, msg);
             e.printStackTrace();
         }
-        return "listaEstudiantes?faces-redirect=true";
+        return null; // Permanece en la misma página después de ejecutar
     }
+    
     public String actualizarEstudiante() {
         if (estudiante != null && estudiante.getEstCiudad() != null) {
             managerEstudiante.actualizarEstudiante(estudiante.getId(), estudiante.getNombre(), estudiante.getApellido(), estudiante.getEmail(), estudiante.getFechaNacimiento(), estudiante.getEstCiudad().getId());
