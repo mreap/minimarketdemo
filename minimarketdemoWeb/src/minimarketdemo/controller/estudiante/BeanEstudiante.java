@@ -6,10 +6,12 @@ import minimarketdemo.model.estudiantes.managers.ManagerEstudiante;
 import minimarketdemo.model.ciudad.managers.ManagerCiudad;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import java.io.Console;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -63,14 +65,27 @@ public class BeanEstudiante implements Serializable {
 
     // Métodos CRUD
     public String crearEstudiante() {
-    	System.out.println("aaaa");
-        if (estudiante != null && estudiante.getEstCiudad() != null) {
-            managerEstudiante.crearEstudiante(estudiante.getNombre(), estudiante.getApellido(), estudiante.getEmail(), estudiante.getFechaNacimiento(), estudiante.getEstCiudad().getId());
-            estudiante = new EstEstudiante(); // Reseteamos el objeto para un nuevo registro
+        try {
+            System.out.println("Datos del estudiante:");
+            System.out.println("Nombre: " + estudiante.getNombre());
+            System.out.println("Apellido: " + estudiante.getApellido());
+            System.out.println("Email: " + estudiante.getEmail());
+            System.out.println("Fecha Nacimiento: " + estudiante.getFechaNacimiento());
+            System.out.println("ID Ciudad: " + estudiante.getEstCiudad().getId());
+
+            if (estudiante != null && estudiante.getEstCiudad() != null) {
+                managerEstudiante.crearEstudiante(estudiante.getNombre(), 
+                                                  estudiante.getApellido(), 
+                                                  estudiante.getEmail(), 
+                                                  estudiante.getFechaNacimiento(), 
+                                                  estudiante.getEstCiudad().getId());
+                estudiante = new EstEstudiante(); // Reseteamos el objeto para un nuevo registro
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         return "listaEstudiantes?faces-redirect=true";
     }
-
     public String actualizarEstudiante() {
         if (estudiante != null && estudiante.getEstCiudad() != null) {
             managerEstudiante.actualizarEstudiante(estudiante.getId(), estudiante.getNombre(), estudiante.getApellido(), estudiante.getEmail(), estudiante.getFechaNacimiento(), estudiante.getEstCiudad().getId());

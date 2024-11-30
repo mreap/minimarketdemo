@@ -39,6 +39,7 @@ public class EstEstudiante implements Serializable {
 	private EstCiudad estCiudad;
 
 	public EstEstudiante() {
+		this.estCiudad = new EstCiudad();
 	}
 
 	public Integer getId() {
